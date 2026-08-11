@@ -1074,49 +1074,12 @@
   <div id="standaloneMsg" style="margin-top: 10px; font-size: 12px; color: #4CAF50;"></div>
 </div>
 
-<!-- تضمين مكتبة القص (Cropper.js) لكي تعمل الأداة بشكل صحيح -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
-
-<script>
-  let standaloneCropper = null;
-
-  function loadStandaloneImage(e) {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = function(event) {
-        const imgTag = document.getElementById('standaloneImageTag');
-        imgTag.src = event.target.result;
-        
-        document.getElementById('standalonePreviewContainer').style.display = 'block';
-        document.getElementById('standaloneCropBtn').style.display = 'block';
-        
-        if (standaloneCropper) standaloneCropper.destroy();
-        
-        standaloneCropper = new Cropper(imgTag, {
-          aspectRatio: 1, // نسبة أبعاد مربعة (تستطيع تغييرها لو تبغى مستطيل)
-          viewMode: 1,
-          autoCropArea: 0.9,
-        });
-      };
-      reader.readAsDataURL(file);
-    }
-  }
-
-  function saveStandaloneCrop() {
-    if (standaloneCropper) {
-      const canvas = standaloneCropper.getCroppedCanvas({
-        width: 300,
-        height: 300
-      });
-      const finalBase64Image = canvas.toDataURL('image/png');
-      
-      // هنا تطلع لك الصورة النهائية جاهزة كـ Base64 تستخدمها وين ما تبغى
-      document.getElementById('standaloneMsg').innerText = "تم قص الصورة وحفظها بنجاح!";
-      
-      // مثال: حفظها في الذاكرة المؤقتة لو حابب
-      localStorage.setItem('myCustomCroppedImage', finalBase64Image);
+<!-- خيار اختيار الصورة وتعديلها في الإعدادات -->
+      <div class="input-group">
+        <label data-i18n="changeAvatarLabel">اختيار صورة الحساب</label>
+        <input type="file" id="fileInput" accept="image/*" style="display: none;" onchange="handleImageSelection(event)">
+        <button class="btn switch-btn" onclick="document.getElementById('fileInput').click()" data-i18n="chooseImageBtn">اختر صورة</button>
+      </div>      localStorage.setItem('myCustomCroppedImage', finalBase64Image);
     }
   }
 </script>
