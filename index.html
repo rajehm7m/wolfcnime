@@ -1531,69 +1531,6 @@
   </div>
 
   <!-- حاوية التحكم أعلى اليسار -->
-  <div class="top-left-controls" id="topLeftControls">
-    <div class="user-profile-display" onclick="openSettings()" title="الملف الشخصي">
-      <img id="navAvatarImg" class="user-avatar-img" src="Untitl55ed.png" alt="صورة الحساب">
-      <span id="navUsernameTag" class="user-name-tag"></span>
-    </div>
-    <div class="settings-btn" onclick="openSettings()" title="الإعدادات">⚙️</div>
-  </div>
-
-  <!-- عنوان القسم -->
-  <div class="section-title" id="sectionTitle">المقاطع والعروض</div>
-
-  <!-- شبكة الأسماء المنفصلة -->
-  <div class="movies-grid" id="moviesGrid">
-    <div class="movie-item"><span class="movie-title-tag">اسم المقطع الأول</span></div>
-    <div class="movie-item"><span class="movie-title-tag">اسم المقطع الثاني</span></div>
-    <div class="movie-item"><span class="movie-title-tag">اسم المقطع الثالث</span></div>
-  </div>
-
-  <!-- نافذة الإعدادات -->
-  <div class="modal-overlay" id="settingsModal" style="display: none;">
-    <div class="auth-box">
-      <span class="close-btn" onclick="closeSettings()">✕</span>
-      <h2 style="margin-bottom: 15px;">إعدادات الحساب</h2>
-      
-      <div class="input-group">
-        <label>تغيير اسم الحساب (ثنائي وفوق)</label>
-        <input type="text" id="newUsernameInput">
-      </div>
-
-      <div class="input-group">
-        <label>اختر اللغة</label>
-        <select id="langSelect">
-          <option value="ar">العربية (Arabic)</option>
-          <option value="en">English (إنجليزي)</option>
-        </select>
-      </div>
-
-      <div class="input-group">
-        <label>صورة الحساب الشخصية</label>
-        <!-- ملف الصورة (مخفي، يتم فتحه بضغطة الزر أدناه) -->
-        <input type="file" id="fileInput" accept="image/*" style="display: none;" onchange="handleImageSelection(event)">
-        <button class="btn switch-btn" onclick="document.getElementById('fileInput').click()">اختر صورة وتعديلها</button>
-      </div>
-
-      <button class="btn" onclick="saveSettings()">حفظ التغيرات</button>
-      <button class="btn logout-btn" onclick="logout()">تسجيل الخروج</button>
-      <div class="msg" id="settingsMsg" style="color: #4CAF50;"></div>
-    </div>
-  </div>
-  <!-- استدعاء مكتبة القص Cropper.js وتصميمها -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
-
-<!-- نافذة القص المنبثقة (تضاف تلقائياً) -->
-<div id="customCropperModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:99999; justify-content:center; align-items:center; flex-direction:column;">
-  <div style="background:#16161e; padding:20px; border:1px solid #2d2d3d; max-width:90%; width:400px; text-align:center;">
-    <h3 style="color:#fff; margin-bottom:15px;" id="cropModalTitle">قص الصورة الشخصية</h3>
-    <div style="max-height:300px; overflow:hidden; margin-bottom:15px;">
-      <img id="imageToCropTarget" style="max-width:100%; display:block;" alt="الصورة المراد قصها">
-    </div>
-    <div style="display:flex; gap:10px;">
-      <button type="button" id="cropConfirmBtn" class="btn" style="background:#e11d48; border:none; padding:10px; color:#fff; cursor:pointer; flex:1;">تأكيد</button>
-      <button type="button" id="cropCancelBtn" class="btn" style="background:#282830; border:none; padding:10px; color:#fff; cursor:pointer; flex:1;">إلغاء</button>
     </div>
   </div>
 </div>
