@@ -1580,6 +1580,105 @@
       <div class="msg" id="settingsMsg" style="color: #4CAF50;"></div>
     </div>
   </div>
+  <!-- استدعاء مكتبة القص Cropper.js وتصميمها -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+
+<!-- نافذة القص المنبثقة (تضاف تلقائياً) -->
+<div id="customCropperModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:99999; justify-content:center; align-items:center; flex-direction:column;">
+  <div style="background:#16161e; padding:20px; border:1px solid #2d2d3d; max-width:90%; width:400px; text-align:center;">
+    <h3 style="color:#fff; margin-bottom:15px;" id="cropModalTitle">قص الصورة الشخصية</h3>
+    <div style="max-height:300px; overflow:hidden; margin-bottom:15px;">
+      <img id="imageToCropTarget" style="max-width:100%; display:block;" alt="الصورة المراد قصها">
+    </div>
+    <div style="display:flex; gap:10px;">
+      <button type="button" id="cropConfirmBtn" class="btn" style="background:#e11d48; border:none; padding:10px; color:#fff; cursor:pointer; flex:1;">تأكيد</button>
+      <button type="button" id="cropCancelBtn" class="btn" style="background:#282830; border:none; padding:10px; color:#fff; cursor:pointer; flex:1;">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // تفعيل أداة القص وتعديل زر اختيار الصورة الحالي برمجياً
+  document.addEventListener("DOMContentLoaded", function() {
+    const fileInput = document.getElementById('fileInput');
+    if (!fileInput) return;
+
+    // تغيير السلوك عند الضغط على زر "اختر صورة" في الإعدادات
+    const chooseImgBtn = fileInput.nextElementSibling;
+    
+    // إنشاء عنصر عرض مؤقت للصورة داخل نافذة القص
+    const modal = document.getElementById('customCropperModal');
+    const imageElement = document.getElementById('imageToCropTarget');
+    const confirmBtn = document.getElementById('cropConfirmBtn');
+    const cancelBtn = document.getElementById('cropCancelBtn');
+    const titleEl = document.getElementById('cropModalTitle');
+
+    // ترجمة بسيطة للعنوان حسب لغة الموقع الحالية
+    if (localStorage.getItem('appLang') === 'en') {
+      titleEl.innerText = "Crop Profile Picture";
+      confirmBtn.innerText = "Confirm";
+      cancelBtn.innerText = "Cancel";
+    }
+
+    let cropper = null;
+
+    // إلغاء الحدث القديم وتفعيل فتح نافذة القص عند اختيار ملف
+    fileInput.removeAttribute('onchange');
+    fileInput.addEventListener('change', function(e) {
+      const files = e.target.files;
+      if (files && files.length > 0) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          imageElement.src = event.target.result;
+          modal.style.display = 'flex';
+          
+          if (cropper) {
+            cropper.destroy();
+          }
+          
+          cropper = new Cropper(imageElement, {
+            aspectRatio: 1, // قص المربع الشخصي
+            viewMode: 1,
+            autoCropArea: 1,
+          });
+        };
+        reader.readAsDataURL(files[0]);
+      }
+    });
+
+    // زر التأكيد وحفظ الصورة المقصوصة وتحديث المتغيرات في كودك
+    confirmBtn.addEventListener('click', function() {
+      if (cropper) {
+        const canvas = cropper.getCroppedCanvas({
+          width: 300,
+          height: 300
+        });
+        
+        uploadedImageBase64 = canvas.toDataURL('image/png');
+        
+        // تحديث معاينة الصورة في الإعدادات أو الهيدر إن وجد
+        if (typeof navAvatarImg !== 'undefined') {
+          navAvatarImg.src = uploadedImageBase64;
+        }
+
+        modal.style.display = 'none';
+        cropper.destroy();
+        cropper = null;
+      }
+    });
+
+    // زر الإلغاء
+    cancelBtn.addEventListener('click', function() {
+      modal.style.display = 'none';
+      if (cropper) {
+        cropper.destroy();
+        cropper = null;
+      }
+      fileInput.value = '';
+    });
+  });
+</script>
 
   </script>
 </body>
