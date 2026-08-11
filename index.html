@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
@@ -177,7 +176,7 @@
       text-align: center;
     }
 
-    /* البنر المتحرك العلوي */
+    /* البنر المتحرك العلوي (بدل الكلمة القديمة) */
     .hero-banner {
       width: 100%;
       max-width: 1400px;
@@ -243,7 +242,7 @@
       text-shadow: 0 1px 5px rgba(0,0,0,0.8);
     }
 
-    /* واجهة الفيديوهات بطريقة نتفليكس */
+    /* واجهة الفيديوهات بطريقة نتفليكس (عناصر أصغر، أفقية، أو شبكة منظمة) */
     .section-title {
       width: 95%;
       max-width: 1400px;
@@ -270,7 +269,7 @@
     .movie-card {
       position: relative;
       background: #181820;
-      aspect-ratio: 16 / 9;
+      aspect-ratio: 16 / 9; /* شكل أفقي مصغر شبيه بنتفليكس */
       cursor: pointer;
       overflow: hidden;
       border: 1px solid #222;
@@ -500,9 +499,9 @@
     <h1><span data-i18n="welcomeGreeting">مرحباً بك،</span> <span id="welcomeUser"></span> 👋</h1>
   </div>
 
-  <!-- 4. البنر المتحرك العلوي -->
+  <!-- 4. البنر المتحرك العلوي (بدل اسم الموقع القديم) -->
   <div class="hero-banner" id="heroBanner">
-    <div class="banner-slide active" style="background-image: url('https://cdn.discordapp.com/attachments/1321582290043666504/1536526713532719164/Untitl55ed.png?ex=6a7bb983&is=6a7a6803&hm=cc76fafbeefea3d3c437f8f65fcb18bcd7aa03c53377b260cf9a156083570d6e&');">
+    <div class="banner-slide active" style="background-image: url('Uhttps://cdn.discordapp.com/attachments/1321582290043666504/1536526713532719164/Untitl55ed.png?ex=6a7bb983&is=6a7a6803&hm=cc76fafbeefea3d3c437f8f65fcb18bcd7aa03c53377b260cf9a156083570d6e&');">
       <div class="banner-overlay"></div>
       <div class="banner-content">
         <h2>WOLF <span>CINEMA</span></h2>
@@ -518,7 +517,7 @@
     </div>
   </div>
 
-  <!-- حاوية التحكم أعلى اليسار -->
+  <!-- حاوية التحكم أعلى اليسار: صورة الحساب وتحتها اسمه، بجانب زر الإعدادات -->
   <div class="top-left-controls" id="topLeftControls">
     <div class="user-profile-display" onclick="openSettings()" title="الملف الشخصي">
       <img id="navAvatarImg" class="user-avatar-img" src="https://cdn.discordapp.com/attachments/1321582290043666504/1536526713532719164/Untitl55ed.png?ex=6a7bb983&is=6a7a6803&hm=cc76fafbeefea3d3c437f8f65fcb18bcd7aa03c53377b260cf9a156083570d6e&" alt="صورة الحساب">
@@ -530,20 +529,27 @@
   <!-- عنوان القسم -->
   <div class="section-title" id="sectionTitle" data-i18n="sectionVideos">المقاطع والعروض</div>
 
-  <!-- شبكة الفيديوهات -->
+  <!-- شبكة الفيديوهات (بنمط نتفليكس مصغر وأفقي) -->
   <div class="movies-grid" id="moviesGrid">
-    <div class="movie-card" data-videourl="#" onclick="openVideo(this)">
+    
+    <!-- المقطع الأول -->
+    <div class="movie-card" data-videourl="https://preview.upstream.so/upstream-2020/upstream/files/a277e704-3659-4738-9764-c915b6d83df6/spider-manbrndnewday20261080phdts-03689e19-aea5-403e-8345-cadda167c404.mp4?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=asBgub3s3658NbVE1IN4%2F20260810%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20260810T234607Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Signature=0644fdff00f0ba4696deda0c74e3b130202ee90390595f629f48daffd0a85da5" onclick="openVideo(this)">
       <img src="https://preview.redd.it/spider-man-brand-new-day-official-teaser-poster-31-july-2026-v0-vfej2ntqsz5h1.jpeg?auto=webp&s=aff0105a89a8036f3204f0f9894119a1efddba2c" alt="غلاف المقطع الأول">
       <div class="play-btn"></div>
     </div>
-    <div class="movie-card" data-videourl="#" onclick="openVideo(this)">
+
+    <!-- المقطع الثاني -->
+    <div class="movie-card" data-videourl="https://preview.upstream.so/upstream-2020/upstream/files/a277e704-3659-4738-9764-c915b6d83df6/spider-man32007remastered720pbluray-8e42fbea-3946-4973-a2fc-f6bae1051d50.mp4?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=asBgub3s3658NbVE1IN4%2F20260810%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20260810T234607Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Signature=f260270170e775bb48337409c4dd896cd53d23ffb0e98ef804244855a23f45b2" onclick="openVideo(this)">
       <img src="https://i.ebayimg.com/images/g/NL8AAMXQWuRQ9zH3/s-l960.webp" alt="غلاف المقطع الثاني">
       <div class="play-btn"></div>
     </div>
-    <div class="movie-card" data-videourl="#" onclick="openVideo(this)">
+
+    <!-- المقطع الثالث -->
+    <div class="movie-card" data-videourl="https://preview.upstream.so/upstream-2020/upstream/files/a277e704-3659-4738-9764-c915b6d83df6/captainamericacivilwar20161080pbluray-1-023c9b4c-7938-426f-8767-469d491fe906.mp4?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=asBgub3s3658NbVE1IN4%2F20260810%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20260810T234607Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Signature=b01e810583e2fcf64ec88e6490aaac2cf26ff10a2a95481d689348134e601bcf" onclick="openVideo(this)">
       <img src="https://media0106.elcinema.com/uploads/_315x420_2e4fad7f50aa6e7cd3a0864d17cbb5cf06b03273ccba350f7b8c71fa61059dad.jpg" alt="غلاف المقطع الثالث">
       <div class="play-btn"></div>
     </div>
+
   </div>
 
   <!-- نافذة الإعدادات -->
@@ -756,15 +762,13 @@
         logoutBtn: "Çıkış Yap",
         errShort: "Kullanıcı adı en az 2 karakter olmalıdır.",
         errTaken: "Bu kullanıcı adı zaten alınmış.",
-        errLogin: "Hesap kayıtlı değil veya bilgiler hatalى.",
+        errLogin: "Hesap kayıtlı değil veya bilgiler hatalı.",
         successImg: "Görsel başarıyla eklendi!",
         successSave: "Değişiklikler kaydedildi!"
       }
     };
 
     let currentLang = localStorage.getItem('appLang') || 'ar';
-    let uploadedImageBase64 = null;
-    let bannerInterval = null;
 
     function applyLanguage(lang) {
       if (lang === 'ar') {
@@ -800,20 +804,18 @@
     const navAvatarImg = document.getElementById('navAvatarImg');
     const navUsernameTag = document.getElementById('navUsernameTag');
 
+    let uploadedImageBase64 = null;
+    let bannerInterval = null;
+
     window.onload = function() {
       langSelect.value = currentLang;
       applyLanguage(currentLang);
 
       const activeUser = localStorage.getItem('activeSession');
       if (activeUser) {
-        // تم التعديل هنا: إخفاء نافذة الدخول مباشرة وعدم تشغيل الأنيميشن المتكرر إذا كان مسجلاً مسبقاً
         authModal.style.display = 'none';
         updateUserHeader(activeUser);
-        heroBanner.style.display = 'block';
-        sectionTitle.style.display = 'block';
-        topLeftControls.style.display = 'flex';
-        moviesGrid.style.opacity = '1';
-        startBannerSlider();
+        startFullExperience(activeUser);
       } else {
         authModal.style.display = 'flex';
         showStep(stepChoice);
@@ -926,7 +928,7 @@
         return;
       }
 
-      const users = getUsers();
+        const users = getUsers();
       if (users[user]) {
         document.getElementById('regMsg').innerText = translations[currentLang].errTaken;
         return;
@@ -942,94 +944,96 @@
     }
 
     function openSettings() {
-      document.getElementById('settingsModal').style.display = 'flex';
-      document.getElementById('newUsernameInput').value = localStorage.getItem('activeSession') || '';
-      document.getElementById('settingsMsg').innerText = '';
+      const currentUser = localStorage.getItem('activeSession');
+      document.getElementById('newUsernameInput').value = currentUser;
+      langSelect.value = currentLang;
+      settingsModal.style.display = 'flex';
       uploadedImageBase64 = null;
     }
 
     function closeSettings() {
-      document.getElementById('settingsModal').style.display = 'none';
+      settingsModal.style.display = 'none';
+      clearMessages();
     }
 
-    if (fileInput) {
-      fileInput.addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = function(event) {
-            uploadedImageBase64 = event.target.result;
-            document.getElementById('settingsMsg').style.color = '#4CAF50';
-            document.getElementById('settingsMsg').innerText = translations[currentLang].successImg || "تمت إضافة الصورة بنجاح!";
-          };
-          reader.readAsDataURL(file);
-        }
-      });
-    }
+    fileInput.onchange = function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          uploadedImageBase64 = event.target.result;
+          document.getElementById('settingsMsg').innerText = translations[currentLang].successImg;
+        };
+        reader.readAsDataURL(file);
+      }
+    };
 
     function saveSettings() {
-      const activeUser = localStorage.getItem('activeSession');
+      const currentUser = localStorage.getItem('activeSession');
+      const newUsername = document.getElementById('newUsernameInput').value.trim();
+      const selectedLang = langSelect.value;
       const users = getUsers();
-      const newNameInput = document.getElementById('newUsernameInput').value.trim();
-      const selectedLang = document.getElementById('langSelect').value;
 
-      currentLang = selectedLang;
-      localStorage.setItem('appLang', currentLang);
-      applyLanguage(currentLang);
+      if (!newUsername) return;
 
-      if (!users[activeUser]) return;
+      if (newUsername.length < 2) {
+        document.getElementById('settingsMsg').style.color = '#ff5555';
+        document.getElementById('settingsMsg').innerText = translations[currentLang].errShort;
+        return;
+      }
+
+      if (newUsername !== currentUser && users[newUsername]) {
+        document.getElementById('settingsMsg').style.color = '#ff5555';
+        document.getElementById('settingsMsg').innerText = translations[currentLang].errTaken;
+        return;
+      }
+
+      let userObj = users[currentUser];
 
       if (uploadedImageBase64) {
-        users[activeUser].avatar = uploadedImageBase64;
+        userObj.avatar = uploadedImageBarbase64 || uploadedImageBase64;
       }
 
-      if (newNameInput && newNameInput !== activeUser) {
-        if (newNameInput.length < 2) {
-          document.getElementById('settingsMsg').style.color = '#ff5555';
-          document.getElementById('settingsMsg').innerText = translations[currentLang].errShort;
-          return;
-        }
-        if (users[newNameInput]) {
-          document.getElementById('settingsMsg').style.color = '#ff5555';
-          document.getElementById('settingsMsg').innerText = translations[currentLang].errTaken;
-          return;
-        }
-
-        users[newNameInput] = users[activeUser];
-        delete users[activeUser];
-        localStorage.setItem('registeredUsers', JSON.stringify(users));
-        localStorage.setItem('activeSession', newNameInput);
-        
-        updateUserHeader(newNameInput);
+      if (newUsername !== currentUser) {
+        delete users[currentUser];
+        users[newUsername] = userObj;
+        localStorage.setItem('activeSession', newUsername);
       } else {
-        localStorage.setItem('registeredUsers', JSON.stringify(users));
-        updateUserHeader(activeUser);
+        users[currentUser] = userObj;
       }
+
+      localStorage.setItem('registeredUsers', JSON.stringify(users));
+      
+      currentLang = selectedLang;
+      localStorage.setItem('appLang', selectedLang);
+      applyLanguage(selectedLang);
 
       document.getElementById('settingsMsg').style.color = '#4CAF50';
-      document.getElementById('settingsMsg').innerText = translations[currentLang].successSave || "تم حفظ التغيرات!";
-      
+      document.getElementById('settingsMsg').innerText = translations[currentLang].successSave;
       setTimeout(() => {
         closeSettings();
         location.reload();
-      }, 1000);
+      }, 800);
     }
 
     function logout() {
       localStorage.removeItem('activeSession');
-      location.reload();
+      closeSettings();
+      if (bannerInterval) clearInterval(bannerInterval);
+      moviesGrid.style.opacity = '0';
+      heroBanner.style.display = 'none';
+      sectionTitle.style.display = 'none';
+      topLeftControls.style.display = 'none';
+      authModal.style.display = 'flex';
+      showStep(stepChoice);
     }
 
-    langSelect.addEventListener('change', function(e) {
-      currentLang = e.target.value;
-      localStorage.setItem('appLang', currentLang);
-      applyLanguage(currentLang);
-    });
-
     function openVideo(card) {
-      const url = card.getAttribute('data-videourl');
-      if (url && url !== '#') {
-        window.open(url, '_blank');
+      const videoUrl = card.getAttribute('data-videourl');
+      if (videoUrl && videoUrl.includes('.mp4')) {
+        window.open(videoUrl, '_blank');
+      } else {
+        alert(currentLang === 'ar' ? 'الرجاء وضع رابط فيديو حقيقي في خاصية data-videourl' : 'Please insert a real video link in data-videourl');
       }
     }
   </script>
