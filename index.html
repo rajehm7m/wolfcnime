@@ -1055,3 +1055,68 @@
     </div>
 
   </div>
+<!-- صندوق أداة قص وتعديل الصور المستقل -->
+<div id="imageCropperWidget" style="background: #16161e; padding: 20px; border: 1px solid #2d2d3d; width: 100%; max-width: 350px; text-align: center; font-family: 'Segoe UI', Tahoma, sans-serif; color: #fff; direction: rtl;">
+  <h3 style="margin-bottom: 15px; font-size: 16px;">أداة قص وتعديل الصورة</h3>
+  
+  <!-- زر اختيار الصورة -->
+  <input type="file" id="standaloneFileInput" accept="image/*" style="display: none;" onchange="loadStandaloneImage(event)">
+  <button onclick="document.getElementById('standaloneFileInput').click()" style="background: #e11d48; color: white; border: none; padding: 10px 15px; cursor: pointer; font-weight: bold; width: 100%; margin-bottom: 10px;">اختر صورة</button>
+
+  <!-- مكان عرض الصورة للتعديل -->
+  <div id="standalonePreviewContainer" style="width: 100%; max-height: 250px; background: #000; display: none; margin-bottom: 10px; overflow: hidden;">
+    <img id="standaloneImageTag" style="max-width: 100%; display: block;" alt="معاينة">
+  </div>
+
+  <!-- أزرار التحكم -->
+  <button id="standaloneCropBtn" onclick="saveStandaloneCrop()" style="background: #282830; color: white; border: none; padding: 8px 12px; cursor: pointer; width: 100%; display: none; font-weight: bold;">قص وحفظ الصورة</button>
+  
+  <div id="standaloneMsg" style="margin-top: 10px; font-size: 12px; color: #4CAF50;"></div>
+</div>
+
+<!-- تضمين مكتبة القص (Cropper.js) لكي تعمل الأداة بشكل صحيح -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+
+<script>
+  let standaloneCropper = null;
+
+  function loadStandaloneImage(e) {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        const imgTag = document.getElementById('standaloneImageTag');
+        imgTag.src = event.target.result;
+        
+        document.getElementById('standalonePreviewContainer').style.display = 'block';
+        document.getElementById('standaloneCropBtn').style.display = 'block';
+        
+        if (standaloneCropper) standaloneCropper.destroy();
+        
+        standaloneCropper = new Cropper(imgTag, {
+          aspectRatio: 1, // نسبة أبعاد مربعة (تستطيع تغييرها لو تبغى مستطيل)
+          viewMode: 1,
+          autoCropArea: 0.9,
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  function saveStandaloneCrop() {
+    if (standaloneCropper) {
+      const canvas = standaloneCropper.getCroppedCanvas({
+        width: 300,
+        height: 300
+      });
+      const finalBase64Image = canvas.toDataURL('image/png');
+      
+      // هنا تطلع لك الصورة النهائية جاهزة كـ Base64 تستخدمها وين ما تبغى
+      document.getElementById('standaloneMsg').innerText = "تم قص الصورة وحفظها بنجاح!";
+      
+      // مثال: حفظها في الذاكرة المؤقتة لو حابب
+      localStorage.setItem('myCustomCroppedImage', finalBase64Image);
+    }
+  }
+</script>
