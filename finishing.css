@@ -1,0 +1,53 @@
+/* Open cards are full-height portrait editions: artwork above, a compact story below. */
+.story-panel{background:#10140f;border-color:color-mix(in srgb,var(--tone) 45%,#1c2119)}
+.story-panel::before{inset:0;border:0;border-radius:0}
+.story-content{height:100%;display:grid;grid-template-rows:54px minmax(135px,1fr) auto;align-content:stretch}
+.story-detail-top{padding:15px 70px 10px;min-height:0;gap:5px;align-content:center;border-bottom:1px solid #ffffff0b;background:#10140f;z-index:2}
+.story-detail-edition{font-size:7px;letter-spacing:2.2px;color:#7f8979}
+.story-detail-eyebrow{font-size:8px;letter-spacing:1.2px}
+.story-detail-rank{top:17px;left:23px;font-size:12px;gap:6px}.story-detail-rank span{font-size:23px}
+.story-close{top:16px;right:18px;width:30px;height:30px;background:#1b2119}
+.story-detail-art{height:auto;min-height:0;margin:0;overflow:hidden;mask-image:none;background:var(--tint)}
+.story-detail-art::before{display:none}
+.story-detail-art::after{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,#10140f26,transparent 30%,#10140f00 55%,#10140f 100%)}
+.story-detail-art img,.story-flight[data-story=police] .story-detail-art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;filter:saturate(.8);mask-image:none}
+.story-detail-copy{padding:0 27px 22px;margin:-27px 0 0;z-index:2;position:relative}
+.story-panel h2{font:clamp(36px,5.7vh,48px)/1 var(--display);text-align:left;margin:0 0 14px;letter-spacing:-1px;color:var(--tone);padding-bottom:12px;border-bottom:1px solid color-mix(in srgb,var(--tone) 28%,transparent)}
+.story-panel p{font:12px/1.8 var(--body);color:#c5cbbe;margin:0 0 16px}
+.story-panel h3{font:600 10px/1.5 var(--body);color:#7e8a77;margin:0 0 5px}
+.story-paths{gap:0}
+.story-paths li{padding:9px 34px 9px 0;border-bottom:1px solid #ffffff0b;font:11px/1.6 var(--body);color:#d0d4c9}
+.story-paths li:last-child{border-bottom:0}
+.story-paths li::before{top:9px;width:23px;height:23px;display:grid;place-items:center;border:1px solid color-mix(in srgb,var(--tone) 22%,transparent);border-radius:3px;background:color-mix(in srgb,var(--tone) 5%,transparent);font-size:8px}
+.story-apply{margin-top:13px;padding:10px 13px;min-height:44px;font-size:14px}.story-apply small{font-size:8px}
+.story-detail-footer{margin-top:15px;padding-top:12px;font:7px var(--body);letter-spacing:2px;color:#778270;border-color:#ffffff10}.story-detail-footer img{width:25px;height:25px}
+@media(max-width:600px){.story-detail-copy{padding:0 22px 18px}.story-panel h2{font-size:36px;margin-bottom:11px}.story-panel p{font-size:11px;margin-bottom:12px}.story-paths li{font-size:10px;padding-block:8px}.story-detail-footer{margin-top:12px}.story-detail-top{padding-inline:63px}}
+/* Both layers use identical vector paths, with no per-letter clipping or font boxes. */
+.footer-wordmark{font-size:0;line-height:0;mask-image:none;overflow:visible;padding:0;margin:38px 0 28px;pointer-events:auto}
+.wordmark-art{display:block;width:100%;height:auto;overflow:visible;mask-image:linear-gradient(#000 50%,#000b 100%)}
+.wordmark-hit{pointer-events:all;stroke:none}
+.wordmark-outline{fill:none;stroke:url(#wordmark-outline);stroke-width:1;vector-effect:non-scaling-stroke;pointer-events:none}
+.wordmark-fill{fill:#ff7828;stroke:none;opacity:0;pointer-events:none;transition:opacity 1.25s ease-out}
+.wordmark-glyph:hover .wordmark-fill{opacity:1;transition-duration:.18s}
+@media(prefers-reduced-motion:reduce){.wordmark-fill{transition:none}}
+
+/* Blend the portrait into the header and retain just one sentence and three role tags. */
+.story-detail-top{border-bottom:0}
+.story-detail-art{background:#10140f}
+.story-detail-art img,.story-flight[data-story=police] .story-detail-art img{top:12px;height:calc(100% - 12px);mask-image:linear-gradient(to bottom,transparent,#000 14%,#000 80%,transparent)}
+.story-detail-art::after{background:linear-gradient(to bottom,#10140f 0,transparent 17%,transparent 62%,#10140f 100%)}
+.story-panel h3{display:none}
+.story-panel p{margin-bottom:16px}
+.story-paths{display:flex;gap:7px;flex-wrap:wrap}
+.story-paths li,.story-paths li:last-child{flex:1;padding:8px 7px;border:1px solid color-mix(in srgb,var(--tone) 20%,transparent);border-radius:4px;text-align:center;font:10px/1.5 var(--body);background:#ffffff03;white-space:nowrap}
+.story-paths li::before{display:none}
+.wordmark-glyph.is-auto-filled .wordmark-fill{opacity:1;transition-duration:.6s}
+@media(prefers-reduced-motion:reduce){.wordmark-glyph.is-auto-filled .wordmark-fill{transition:none}}
+
+.footer-brand .brand-mark{width:49px;height:49px}
+.footer-brand-name{position:relative;display:block;line-height:1.15}
+.footer-brand-name::before,.footer-brand-name::after{content:attr(data-text);position:absolute;inset:0;opacity:0;pointer-events:none;font:inherit;letter-spacing:inherit}
+.footer-brand-name::before{color:#ff752b}.footer-brand-name::after{color:#7cc9d0}
+.footer-brand.is-glitching .footer-brand-name::before{animation:brand-slice-a .65s steps(1,end) both}
+.footer-brand.is-glitching .footer-brand-name::after{animation:brand-slice-b .65s steps(1,end) both}
+@media(prefers-reduced-motion:reduce){.footer-brand .brand-mark::before,.footer-brand .brand-mark::after,.footer-brand-name::before,.footer-brand-name::after{animation:none!important}}

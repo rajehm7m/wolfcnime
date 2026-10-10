@@ -1,0 +1,55 @@
+/* A matte invitation, continuous with the archive above it. */
+.city-access{position:relative;padding:72px 6% 92px;background:#141711;color:#e9e8de;overflow:hidden}
+.access-content{position:relative;max-width:700px;margin:auto;display:grid;grid-template-columns:minmax(0,1fr) 264px;align-items:stretch;border:1px solid #444937;border-radius:18px;background:#161a13;isolation:isolate}
+.access-content::before{content:'';position:absolute;top:-1px;left:38px;width:84px;height:2px;background:#ff7828;transform-origin:left;z-index:2}
+.access-heading{padding:30px;display:flex;flex-direction:column;justify-content:space-between;min-height:338px;position:relative;overflow:hidden}
+.access-heading::before{content:'';position:absolute;inset:0;z-index:-1;opacity:.35;background:repeating-linear-gradient(125deg,transparent 0 28px,#b7c59709 29px,transparent 30px);mask-image:linear-gradient(90deg,#000,transparent 70%)}
+.access-topline,.access-bottomline{display:flex;justify-content:space-between;align-items:center;gap:18px;font:8px var(--body);letter-spacing:2px;color:#7e8970}
+.access-index{font:600 9px var(--body);letter-spacing:2px;color:#c4cbb8}.access-platform{font-size:8px;letter-spacing:1.7px}
+.access-invitation{display:flex;align-items:center;gap:26px;padding:38px 0}
+.access-brand{width:85px;height:auto;object-fit:contain;flex-shrink:0;transition:transform .7s cubic-bezier(.16,1,.3,1)}
+.access-title{font:700 32px/1.5 var(--body);letter-spacing:-1px;margin:0;color:#eeeede;text-align:left}
+.access-caption{display:block;font:12px/1.5 var(--display);color:#8e9a7f;margin-top:3px;letter-spacing:.8px}
+.access-bottomline{border-top:1px solid #ffffff0b;padding-top:19px;font-size:7px;letter-spacing:1.5px}.access-bottomline>span:last-child{color:#ff7828;font-size:16px}
+.access-actions{position:relative;padding:18px;border-left:1px dashed #56604480;display:flex;align-items:stretch}
+.access-actions::before,.access-actions::after{content:'';position:absolute;left:-9px;width:16px;height:16px;border:1px solid #444937;border-radius:50%;background:#141711;z-index:3}
+.access-actions::before{top:-9px;border-top-color:transparent;border-left-color:transparent;rotate:45deg}.access-actions::after{bottom:-9px;border-bottom-color:transparent;border-right-color:transparent;rotate:45deg}
+.access-connect{width:100%;min-height:300px;padding:22px;display:flex;flex-direction:column;align-items:stretch;justify-content:space-between;gap:20px;border:1px solid #ff78285c;border-radius:9px;background:#1e2519;color:#f1f0e6;text-decoration:none}
+.access-cta-top{display:flex;justify-content:space-between;align-items:center;font:8px var(--body);letter-spacing:1.5px;color:#a5af95}.access-cta-top small{font:16px var(--body);color:#ff8b43}
+.access-connect-icon{align-self:flex-start;display:block;color:#ff8b43}.access-connect-icon svg{width:60px;height:60px;display:block}
+.access-cta-label{font:600 23px/1.5 var(--body);text-align:right}.access-cta-label>span{display:block;font:10px/1.5 var(--body);color:#9aa98a;margin-top:4px}
+.access-status{position:absolute;top:100%;right:0;left:0;min-height:18px;margin:10px 0 0;font:10px/1.7 var(--body);color:#a1aa95;text-align:right}
+.city-access.is-enhanced .access-content{opacity:0;transform:translateY(22px)}
+.city-access.has-arrived .access-content{animation:access-arrive .85s cubic-bezier(.16,1,.3,1) both}
+.city-access.has-arrived .access-content::before{animation:access-rule .75s .3s cubic-bezier(.16,1,.3,1) both}
+.city-access.has-arrived .access-invitation{animation:access-arrive .85s .15s cubic-bezier(.16,1,.3,1) both}
+.city-access.has-arrived .access-connect{animation:access-arrive .8s .3s cubic-bezier(.16,1,.3,1) both}
+.access-content:hover .access-brand{transform:translateY(-5px) rotate(-4deg)}
+@keyframes access-arrive{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@keyframes access-rule{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@media(max-width:1000px){.access-content{grid-template-columns:minmax(0,1fr) 264px}.access-heading{padding:28px;min-height:338px}.access-invitation{gap:20px}.access-brand{width:85px}.access-title{font-size:32px}.access-connect{min-height:300px;padding:18px}.access-caption{font-size:11px}}
+@media(max-width:700px){.city-access{padding:40px 6% 65px}.access-content{grid-template-columns:1fr;border-radius:14px}.access-heading{min-height:260px;padding:24px}.access-invitation{gap:20px;justify-content:center;padding:35px 0}.access-title{font-size:clamp(27px,5vw,36px)}.access-brand{width:75px}.access-caption{font-size:10px}.access-platform{font-size:6px;letter-spacing:1px}.access-actions{border-left:0;border-top:1px dashed #56604480;padding:16px}.access-actions::before{top:-9px;left:-9px;rotate:135deg}.access-actions::after{bottom:auto;top:-9px;right:-9px;left:auto;rotate:135deg}.access-connect{display:grid;grid-template-columns:50px 1fr;align-items:center;min-height:100px;padding:18px 22px;gap:12px}.access-cta-top{display:none}.access-connect-icon svg{width:45px;height:45px}.access-cta-label{font-size:21px}.access-status{font-size:9px}.access-topline{gap:8px}}
+@media(prefers-reduced-motion:reduce){.city-access.is-enhanced .access-content,.city-access.has-arrived .access-content,.city-access.has-arrived .access-invitation,.city-access.has-arrived .access-connect,.city-access.has-arrived .access-content::before{opacity:1;transform:none;animation:none}.access-brand{transition:none}.access-content:hover .access-brand{transform:none}}
+
+/* The perforation opens before the detachable stub moves; the native link stays immediate. */
+.access-tear-line{position:absolute;left:-1px;top:8px;bottom:8px;width:2px;background:#ff7828;transform:scaleY(0);transform-origin:top;pointer-events:none;z-index:5}
+.city-access.is-torn .access-content{background:transparent;border-color:transparent;transition:background .3s .25s,border-color .3s .25s}
+.city-access.is-torn .access-heading{background:#161a13;border:1px solid #444937;border-right:1px dashed #67734f;border-radius:18px 0 0 18px;box-shadow:none;clip-path:none}
+.city-access.is-torn .access-actions{background:#161a13;border:1px solid #444937;border-left:1px dashed #67734f;border-radius:0 18px 18px 0;box-shadow:none;transform-origin:bottom left;animation:access-detach .85s .25s cubic-bezier(.2,.7,.2,1) both}
+.city-access.is-torn .access-actions::before,.city-access.is-torn .access-actions::after{opacity:0;transition:opacity .2s .2s}
+.city-access.is-torn .access-tear-line{animation:access-tear .4s ease-in both}
+@keyframes access-tear{0%{transform:scaleY(0);opacity:1}80%{transform:scaleY(1);opacity:1}100%{transform:scaleY(1);opacity:0}}
+@keyframes access-detach{0%{transform:none}30%{transform:translate(3px,0) rotate(.4deg)}100%{transform:translate(15px,5px) rotate(1.5deg)}}
+@media(max-width:700px){
+ .access-tear-line{top:-1px;bottom:auto;left:8px;right:8px;width:auto;height:2px;transform:scaleX(0);transform-origin:left}
+ .city-access.is-torn .access-heading{border-radius:14px 14px 0 0;border-right-style:solid;border-right-color:#444937;border-bottom:1px dashed #67734f;clip-path:none}
+ .city-access.is-torn .access-actions{border-radius:0 0 14px 14px;border-left-style:solid;border-left-color:#444937;border-top:1px dashed #67734f;transform-origin:top left;animation-name:access-detach-mobile}
+ .city-access.is-torn .access-tear-line{animation-name:access-tear-mobile}
+}
+@keyframes access-tear-mobile{0%{transform:scaleX(0);opacity:1}80%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}
+@keyframes access-detach-mobile{0%{transform:none}100%{transform:translate(3px,19px) rotate(1deg)}}
+@media(prefers-reduced-motion:reduce){.city-access.is-torn .access-actions{animation:none;transform:translateY(6px)}.city-access.is-torn .access-content{transition:none}.city-access.is-torn .access-tear-line{animation:none}}
+.access-partners{display:inline-flex;align-items:center;gap:10px;white-space:nowrap}
+.access-partners img{width:28px;height:28px;object-fit:contain}.access-partner-cross{font:11px var(--body);color:#77816b}
+@media(min-width:701px) and (max-width:900px){.city-access{padding-inline:24px}.access-heading{padding:24px}.access-title{font-size:28px}.access-brand{width:75px}.access-invitation{gap:16px}.access-topline{gap:8px}.access-platform{font-size:7px;letter-spacing:1px}}
+@media(max-width:700px){.access-partners{gap:7px}.access-partners img{width:24px;height:24px}.access-index{font-size:8px;letter-spacing:1px}}

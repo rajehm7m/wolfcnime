@@ -1,0 +1,45 @@
+/* Normal document flow is the fallback on small screens and with reduced motion. */
+.chapter-definitions{position:absolute;width:0;height:0;overflow:hidden;pointer-events:none}
+.portal-layer,.portal-type,.memory-edge{display:none}
+.portal-baseline{display:inline-block!important;width:0!important;height:0!important;padding:0!important;margin:0!important;border:0!important;vertical-align:baseline!important}
+.cinema-on .city-access{overflow:visible}
+.cinema-on .city-access.is-enhanced .access-content,.cinema-on .city-access.has-arrived .access-content{opacity:var(--ticket-ink,1);transform:translateY(var(--ticket-rise,0px)) scale(var(--ticket-scale,1));animation:none;transform-origin:50% 60%}
+.cinema-on .city-access.has-arrived .access-content::before,.cinema-on .city-access.has-arrived .access-invitation,.cinema-on .city-access.has-arrived .access-connect{animation:none}
+.cinema-on .access-connect{opacity:var(--ticket-button,1)}
+.cinema-on .city-access:focus-within .access-content,.cinema-on .city-access:focus-within .access-connect{opacity:1;transform:none}
+.cinema-on:not(.cinema-desktop) .headline-window{transform:scale(var(--lite-zoom,1));transform-origin:center;opacity:var(--lite-ink,1)}
+.cinema-desktop .hero-chapter{position:relative;height:var(--hero-run);z-index:3;pointer-events:none}
+.cinema-desktop .hero-chapter>.hero{position:sticky;top:0;pointer-events:auto}
+.cinema-desktop .chapter-stack{position:relative;margin-top:calc(-1 * var(--hero-size));z-index:2}
+.cinema-desktop .hero.is-portal-active .headline-window{overflow:visible}
+.cinema-desktop .hero.has-vector h1{opacity:0;will-change:auto}
+.cinema-desktop .hero.is-portal-active .headline-line{will-change:auto}
+.cinema-desktop .portal-type{position:absolute;inset:0;width:100%;height:100%;z-index:11;overflow:hidden;pointer-events:none;contain:paint}
+.cinema-desktop .hero.has-vector .portal-type{display:block}
+.cinema-desktop .hero.is-portal-active::before{display:none}
+.cinema-desktop .hero.is-portrait-muted .character-stage,.cinema-desktop .hero.is-portrait-muted .character-stage *{visibility:hidden!important}
+/* Image layers set visibility inline; parent opacity and explicit descendant
+   visibility prevent them from leaking through a hidden sticky hero. */
+.cinema-desktop .hero.is-departed{opacity:0!important;pointer-events:none!important}
+.cinema-desktop .hero.is-departed *{visibility:hidden!important;pointer-events:none!important}
+.cinema-on .hero .character-stage{opacity:var(--portrait-ink,1);translate:0 var(--portrait-rise,0px);scale:var(--portrait-scale,1);transform-origin:50% 85%}
+.cinema-desktop .hero.is-portal-active .hero-bottom,.cinema-desktop .hero.is-portal-active .identity,.cinema-desktop .hero.is-portal-active .scene-number,.cinema-desktop .hero.is-portal-active .primary-button{opacity:var(--hero-ink,1)}
+.cinema-desktop .hero.is-portal-active .hero-bottom,.cinema-desktop .hero.is-portal-active .primary-button{pointer-events:none}
+.cinema-desktop .portal-layer{position:absolute;inset:0;z-index:12;display:block;visibility:hidden;pointer-events:none;opacity:var(--portal-ink,0);clip-path:url(#chapter-counter)}
+.cinema-desktop .is-portal-active .portal-layer{visibility:visible}
+.portal-preview{position:absolute!important;inset:0!important;margin:0!important;width:100%!important;height:100%!important;min-height:0!important;transform:none!important;filter:none!important;pointer-events:none!important}
+.portal-preview *{pointer-events:none!important}
+.cinema-desktop .chapter-stack>.story-section{position:sticky;top:var(--story-pin,0px);z-index:2}
+.cinema-desktop .chapter-stack>.story-section.is-revealing{clip-path:url(#memory-reveal)}
+.cinema-desktop .chapter-stack>.story-section.is-reveal-complete{clip-path:inset(100% 0 0);pointer-events:none}
+.cinema-desktop .memory-chapter{position:relative;z-index:auto;pointer-events:none;overflow-anchor:none}
+.cinema-desktop .memory-chapter>.memories-section{position:relative;z-index:1;translate:0 var(--memory-pin,0px);border-top:0;border-radius:0;box-shadow:none;pointer-events:auto}
+.cinema-desktop .memory-chapter>.memories-section.is-revealing{will-change:translate}
+.cinema-desktop .memory-chapter>.memories-section.is-covered{clip-path:inset(100% 0 0);pointer-events:none}
+.cinema-desktop .memory-chapter.has-reveal>.memory-edge{display:block;position:absolute;top:0;left:0;width:100%;translate:0 var(--memory-pin,0px);z-index:3;overflow:visible;pointer-events:none}
+.cinema-desktop .closing-chapters{position:relative;isolation:isolate;z-index:3}
+.cinema-desktop .closing-chapters>.city-access{position:relative;z-index:2}
+.cinema-desktop .closing-chapters>footer.site-footer{position:sticky;bottom:0;z-index:1}
+.cinema-desktop .closing-chapters>footer.footer-tall{position:relative;bottom:auto}
+.cinema-desktop .footer-wordmark{opacity:var(--footer-ink,1);transform:translateY(var(--footer-rise,0px));transform-origin:50% 100%}
+@media(prefers-reduced-motion:reduce){.portal-layer,.portal-type,.memory-edge{display:none!important}}

@@ -1,0 +1,16 @@
+/* Shared left-to-right pixel wipe, sampled from the supplied 30 fps reference. */
+.pixel-button{position:relative!important;isolation:isolate;overflow:hidden!important;--pixel-ink:#151810;transition:color .16s .09s,border-color .2s!important}
+.pixel-button>canvas.pixel-fill{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none!important;display:block}
+.pixel-button>:not(canvas){position:relative;z-index:1;pointer-events:none}
+.pixel-button::before,.pixel-button::after{display:none!important}
+.pixel-button.is-pixel-active{color:var(--pixel-ink)!important;border-color:#ff7828!important;box-shadow:none!important}
+.pixel-button.is-pixel-active span,.pixel-button.is-pixel-active small,.pixel-button.is-pixel-active svg{color:var(--pixel-ink)!important}
+.pixel-button.is-pixel-active svg{transform:none!important}
+.pixel-button.pixel-static.is-pixel-active{background:#ff7828!important}
+.hero .primary-button.pixel-button{border-color:#ff782878;background:#171b14;border-radius:2px;box-shadow:none;min-height:54px}
+.hero .primary-button.pixel-button:hover{background:#171b14;transform:none}
+.hero .primary-button.pixel-button .button-mark{color:#ff7828}
+.footer-discord.pixel-button:hover{background:#121710;box-shadow:none}
+.story-apply.pixel-button{border-color:#ff782863;background:#192016;color:#e6ecdc}
+.story-apply.pixel-button small{color:#a6af96}.story-apply.pixel-button svg{color:#ff8c46}
+@media(prefers-reduced-motion:reduce){.pixel-button{transition:none!important}}

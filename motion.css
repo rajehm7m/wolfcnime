@@ -1,0 +1,44 @@
+/* Dropdown follows the floating masthead's exact width and center. */
+.site-header .studio-menu{left:0;right:0;width:auto;padding:20px;max-height:calc(100svh - 125px);overflow-y:auto;scrollbar-width:none;border-radius:14px;clip-path:inset(0 round 14px);transform-origin:top center;animation:dropdown-unfold .48s cubic-bezier(.16,1,.3,1) both}
+.site-header .studio-menu::-webkit-scrollbar{display:none}
+.studio-menu .menu-eyebrow{font-size:9px;letter-spacing:1.4px;animation:section-reveal .4s .06s both}
+.site-header .studio-menu a{font-size:20px;padding:19px 10px;animation:section-reveal .5s cubic-bezier(.16,1,.3,1) both}
+.site-header .studio-menu a:nth-of-type(1){animation-delay:.12s}
+.site-header .studio-menu a:nth-of-type(2){animation-delay:.26s}
+.site-header .studio-menu a:nth-of-type(3){animation-delay:.4s}
+.site-header .studio-menu a:focus-visible{outline-offset:-3px}
+@keyframes dropdown-unfold{from{opacity:0;clip-path:inset(0 0 100% round 14px);transform:translateY(-7px)}to{opacity:1;clip-path:inset(0 round 14px);transform:none}}
+@keyframes section-reveal{from{opacity:0;transform:translateY(-13px);filter:blur(5px)}to{opacity:1;transform:none;filter:none}}
+
+/* Short chromatic slices on the supplied logo and brand lettering. */
+.brand-mark{position:relative;display:block;flex-shrink:0;line-height:0}
+.brand-mark:before,.brand-mark:after{content:"";position:absolute;inset:0;background:url("../assets/images/mt-logo.png") center/contain no-repeat;opacity:0;pointer-events:none}
+.brand-name,.site-header .brand-type small{position:relative;display:block}
+.brand-name:before,.brand-name:after,.brand-type small:before,.brand-type small:after{content:attr(data-text);position:absolute;inset:0;opacity:0;pointer-events:none;font:inherit;letter-spacing:inherit}
+.brand-name:before,.brand-type small:before{color:#ff752b}
+.brand-name:after,.brand-type small:after{color:#7cc9d0}
+.brand-mark:before{filter:drop-shadow(-2px 0 #ff752b)}
+.brand-mark:after{filter:drop-shadow(2px 0 #7cc9d0)}
+.is-glitching .brand-mark:before,.is-glitching .brand-name:before,.is-glitching .brand-type small:before{animation:brand-slice-a .65s steps(1,end) both}
+.is-glitching .brand-mark:after,.is-glitching .brand-name:after,.is-glitching .brand-type small:after{animation:brand-slice-b .65s steps(1,end) both}
+@keyframes brand-slice-a{0%,100%{opacity:0;transform:none}12%{opacity:.85;clip-path:inset(12% 0 55%);transform:translateX(-3px)}28%{clip-path:inset(60% 0 15%);transform:translateX(4px)}45%{clip-path:inset(28% 0 50%);transform:translateX(-2px)}65%{opacity:.5;clip-path:inset(70% 0 10%);transform:translateX(2px)}82%{opacity:0}}
+@keyframes brand-slice-b{0%,100%{opacity:0;transform:none}16%{opacity:.7;clip-path:inset(55% 0 15%);transform:translateX(3px)}32%{clip-path:inset(10% 0 68%);transform:translateX(-4px)}51%{clip-path:inset(65% 0 20%);transform:translateX(2px)}72%{opacity:.4;clip-path:inset(35% 0 40%);transform:translateX(-2px)}86%{opacity:0}}
+
+/* One continuous fade exposes the already arriving hero. */
+.intro-screen.is-ending{transition:none;animation:intro-dissolve .65s cubic-bezier(.25,.1,.25,1) both}
+@keyframes intro-dissolve{from{opacity:1}to{opacity:0}}
+.intro-scenery{position:absolute;inset:0;z-index:-1;overflow:hidden;pointer-events:none;background:#090a09}
+.intro-dust{position:absolute;inset:-8%;opacity:.5;background-image:radial-gradient(circle at 13% 37%,#ed985b 0 1px,transparent 2px),radial-gradient(circle at 64% 16%,#ed985b 0 1px,transparent 2px),radial-gradient(circle at 83% 65%,#ed985b 0 1px,transparent 2px),radial-gradient(circle at 29% 79%,#ed985b 0 1px,transparent 2px);background-size:410px 310px,530px 420px,610px 460px,730px 580px;animation:dust-drift 16s linear infinite alternate}
+@keyframes dust-drift{to{transform:translate3d(14px,-30px,0)}}
+@media(prefers-reduced-motion:reduce){.intro-dust{animation:none}}
+.intro-audio-enable{position:absolute;top:6%;right:6%;z-index:8;display:flex;align-items:center;gap:14px;min-height:62px;padding:10px 14px;border:1px solid #ff853e75;border-radius:10px;background:linear-gradient(115deg,#201711e8,#11130feb);box-shadow:0 12px 32px #0008,0 0 25px #ff6b1b1c;color:#f3ede4;cursor:pointer;backdrop-filter:blur(12px);transition:border-color .25s,background .25s,transform .25s}
+.intro-audio-enable[hidden]{display:none}
+.intro-audio-enable:hover,.intro-audio-enable:focus-visible{border-color:#ff914e;background:linear-gradient(115deg,#402012ef,#181a16ef);transform:translateY(-2px);outline:none}
+.intro-audio-icon{width:34px;height:34px;display:flex;align-items:center;justify-content:center;gap:3px;border-radius:7px;background:#ff6b1b1c}
+.intro-audio-icon i{width:2px;height:8px;background:#ff8b3e;box-shadow:0 0 7px #ff6b1b80;animation:audio-pulse .65s ease-in-out infinite alternate}
+.intro-audio-icon i:nth-child(2){height:17px;animation-delay:-.2s}.intro-audio-icon i:nth-child(3){height:12px;animation-delay:-.4s}.intro-audio-icon i:nth-child(4){height:20px;animation-delay:-.1s}
+.intro-audio-copy{display:flex;flex-direction:column;align-items:start;gap:3px;text-align:left}.intro-audio-copy strong{font:600 11px var(--body);letter-spacing:1.8px}.intro-audio-copy small{font:10px var(--body);letter-spacing:1px;color:#a29d90}.intro-audio-arrow{color:#ff8b3e;font:20px var(--body);margin-left:8px}
+@keyframes audio-pulse{to{height:4px}}
+@media(max-width:600px){.intro-audio-enable{top:5%;right:7%;min-height:54px;padding:8px 10px;gap:9px}.intro-audio-copy strong{font-size:9px}.intro-audio-copy small{font-size:8px}.intro-audio-arrow{margin-left:3px}}
+@media(prefers-reduced-motion:reduce){.intro-audio-icon i{animation:none}}
+@media(prefers-reduced-motion:reduce){.studio-menu .menu-eyebrow,.site-header .studio-menu a,.brand-mark:before,.brand-mark:after,.brand-name:before,.brand-name:after,.brand-type small:before,.brand-type small:after{animation:none!important}.intro-screen.is-ending{animation:none;opacity:0}.intro-reveal main,.intro-reveal .site-header{animation:none}.intro-reveal:after{display:none}}

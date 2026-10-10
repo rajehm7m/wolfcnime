@@ -1,0 +1,42 @@
+/* A matched deck: arched portraits, opposing ranks and quiet engraved frames. */
+.story-hand{--ch:calc(var(--cw) * 1.62)}
+.story-card{border-radius:9px;border-color:color-mix(in srgb,var(--tone) 50%,#292f26);background:#111710;box-shadow:0 18px 35px #0008;overflow:hidden}
+.story-card::before{inset:10px;border-radius:4px;border-color:color-mix(in srgb,var(--tone) 22%,transparent)}
+.story-card::after{display:none}.story-card-grid{display:none}
+.story-card:hover{box-shadow:0 18px 35px #0008,inset 0 0 0 1px color-mix(in srgb,var(--tone) 40%,transparent)}
+.story-police{--tone:#adc6cd;--tint:#273a3d}.story-criminal{--tone:#cf9789;--tint:#362522}.story-citizen{--tone:#c9bc8f;--tint:#343122}
+.story-corner{top:23px;left:21px;font:13px/1 var(--display);gap:6px;z-index:4}.story-corner>span{font:27px/1 Georgia,serif}
+.story-corner-opposite{top:auto;left:auto;right:21px;bottom:22px;transform:rotate(180deg)}
+.story-card-kicker{top:30px;right:42px;left:42px;text-align:center;font:6px var(--body);letter-spacing:1.2px;color:#929d89}
+.story-card-portrait{position:absolute;top:66px;left:18%;width:64%;height:57%;border:1px solid color-mix(in srgb,var(--tone) 34%,transparent);border-radius:95px 95px 5px 5px;overflow:hidden;background:radial-gradient(ellipse at top,var(--tint),#0c120d 70%)}
+.story-card-portrait::after{content:'';position:absolute;inset:0;background:linear-gradient(transparent 70%,#111710);pointer-events:none}
+.story-card .story-card-portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;filter:saturate(.55);transition:filter .4s}
+.story-card:hover .story-card-portrait img{filter:saturate(.95)}
+.story-card .citizen-emblem{position:absolute;inset:0;display:grid;place-items:center;border:0;transform:none;border-radius:0;width:auto;height:auto;background:none;box-shadow:none;color:var(--tone);font:100px Georgia,serif;opacity:.7}
+.story-card .citizen-mark{position:absolute;top:auto;bottom:28px;font-size:22px;color:var(--tone)}
+.story-card-title{bottom:58px;left:35px;right:35px;text-align:center;font:clamp(24px,2.2vw,33px)/1 var(--display);color:#e6e6d9;text-shadow:none}
+.story-card-title small{text-align:center;font:10px var(--body);color:#96a08c;margin-top:9px}
+.story-card-action{left:50px;right:50px;bottom:23px;height:19px;padding:0;border:0;font:6px var(--body);letter-spacing:1.2px;justify-content:center;color:var(--tone)}.story-card-action b{display:none}
+/* The open card always keeps the deck's portrait proportions, including on desktop. */
+.story-dialog{padding:14px}
+.story-flight{--open-width:min(420px,calc((100dvh - 28px) * .60),calc(100vw - 28px));width:var(--open-width);height:calc(var(--open-width) / .60)}
+.story-panel,.story-dialog.is-animating .story-panel{overflow:hidden;border-radius:12px;background:#111710;border-color:color-mix(in srgb,var(--tone) 65%,transparent)}
+.story-panel::before{content:'';position:absolute;inset:9px;border:1px solid color-mix(in srgb,var(--tone) 20%,transparent);border-radius:5px;pointer-events:none;z-index:2}
+.story-content{width:100%;display:block;transform:translateY(var(--story-offset,0px)) scale(var(--story-fit,1));transform-origin:top center;direction:rtl}
+.story-detail-top{padding:23px 65px 12px;min-height:58px;gap:7px;text-align:center}.story-detail-edition{font-size:7px;letter-spacing:1.5px}.story-detail-eyebrow{font-size:8px;letter-spacing:1.4px;color:var(--tone)}
+.story-detail-rank{position:absolute;top:24px;left:23px;display:grid;text-align:center;gap:5px;color:var(--tone);z-index:4;font:13px/1 var(--display)}.story-detail-rank span{font:26px/1 Georgia,serif}
+.story-detail-art{min-height:0;height:clamp(120px,24dvh,195px);position:relative;overflow:hidden;margin:0 31px 9px;border:0;background:none;mask-image:linear-gradient(#000 84%,transparent)}
+.story-detail-art::before{inset:5px 20% 0;width:auto;height:auto;border-radius:95px 95px 0 0;transform:none;border-color:color-mix(in srgb,var(--tone) 25%,transparent)}
+.story-detail-art img,.story-flight[data-story=police] .story-detail-art img{position:absolute;top:9px;bottom:auto;left:calc(50% - 95px);width:190px;height:285px;object-fit:contain;object-position:center top;mask-image:none;filter:none}
+.story-detail-art>span{position:absolute;inset:0;display:grid;place-items:center;padding:0;font:55px var(--display);color:var(--tone)}
+.story-detail-copy{padding:0 29px 25px;margin:0}
+.story-panel h2{font:36px/1 var(--display);text-align:center;margin:0 0 12px;color:var(--tone)}
+.story-panel p{font:12px/1.7 var(--body);margin:0 0 13px;color:#afb9a5}.story-panel h3{font:600 12px var(--body);margin:0 0 10px}
+.story-paths{gap:8px}.story-paths li{font:11px/1.7 var(--body);padding-right:27px;color:#b1bba7}.story-paths li::before{font-size:9px}
+.story-apply{margin-top:16px;padding:11px 14px;font-size:15px;border-radius:3px}.story-apply small{font-size:9px;margin-top:3px}
+.story-detail-footer{margin-top:15px;padding-top:10px;font-size:6px;letter-spacing:1px}.story-detail-footer img{width:27px;height:27px}
+.story-close{top:20px;left:auto;right:20px;width:29px;height:29px;font-size:20px;z-index:6;border-color:#ffffff20}
+.story-back{border-radius:12px;padding:30px 24px}.story-back::before{border-radius:5px}.story-back::after{border-radius:2px}.story-back-crest{width:min(170px,65%);height:auto;aspect-ratio:1}.story-back-crest img{width:80%;height:80%}
+@media(max-width:800px){.story-hand{--ch:calc(var(--cw) * 1.62)}.story-corner{top:19px;left:17px;font-size:11px}.story-corner>span{font-size:23px}.story-corner-opposite{top:auto;left:auto;bottom:18px;right:17px}.story-card-kicker{top:26px;left:35px;right:35px;font-size:5px;letter-spacing:.4px}.story-card-portrait{top:57px;height:55%}.story-card-title{left:28px;right:28px;bottom:51px;font-size:24px}.story-card-title small{font-size:9px;margin-top:7px}.story-card-action{font-size:5px;letter-spacing:.6px;bottom:20px}}
+@media(max-width:600px){.story-card-title{font-size:21px;left:25px;right:25px}.story-card-portrait{top:53px;height:54%;left:20%;width:60%}.story-card-kicker{font-size:4px;letter-spacing:.1px}.story-card .citizen-emblem{font-size:60px}.story-card .citizen-mark{font-size:18px;bottom:18px}.story-detail-copy{padding-inline:23px}.story-panel h2{font-size:32px}.story-detail-top{padding-inline:60px}.story-detail-art{height:150px}.story-detail-rank{left:20px}.story-close{right:18px}.story-back-top,.story-back-bottom{font-size:10px}.story-back small{font-size:6px;letter-spacing:2px}}
+@media(max-height:550px){.story-back{padding:22px 18px}.story-back-top,.story-back-bottom{font-size:8px;letter-spacing:.5px}.story-back small{font-size:5px;letter-spacing:1px}}

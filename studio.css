@@ -1,0 +1,70 @@
+/* Shared grid reserves real space for both the loading track and the counter. */
+.intro-progress-layout{position:absolute;inset:auto 7% 8%;display:grid;grid-template-columns:minmax(0,1fr) max-content;align-items:end;gap:clamp(40px,6vw,120px)}
+.intro-progress-layout .intro-loading-ui,.intro-progress-layout .intro-counter{position:static;width:auto;margin:0;min-width:0}
+.intro-progress-layout .intro-loading-ui{padding-bottom:12px}
+.intro-progress-layout .intro-counter{gap:12px;padding-right:12px}
+.intro-progress-layout .intro-percent{font-size:clamp(76px,10vw,160px);min-width:0;letter-spacing:-.045em;color:#f0ece4;background:none;filter:none;line-height:.9;padding-right:.1em}
+.intro-loading-caption{flex-wrap:wrap;row-gap:8px;line-height:1.5}
+.intro-loading-line{width:100%}
+.intro-title span{display:inline;font-size:inherit;letter-spacing:inherit;color:inherit;margin:0}
+.intro-title b{font-weight:inherit;color:#ff6b1b}
+
+/* A compact studio masthead with a generous dropdown. */
+:root{--nav-height:90px}
+.site-header{padding-inline:5.5%;background:#10120feb;border-bottom:1px solid #ffffff12;gap:24px}
+.site-header .brand{gap:17px}
+.site-header .brand img{width:54px;height:54px}
+.site-header .brand-type{font-size:31px;line-height:1;letter-spacing:.5px}
+.site-header .brand-type small{display:block;text-transform:none;font:12px/1.2 var(--body);letter-spacing:4px;margin-top:7px;color:#b8b8ad}
+.menu-toggle{display:flex;align-items:center;gap:24px;padding:14px 18px;background:#ffffff04;border:1px solid #ffffff24;color:#f0ece4;font:12px var(--body);letter-spacing:2px;min-height:46px}
+.menu-toggle:hover{border-color:#ff6b1b;background:#ff6b1b0b}
+.menu-toggle i{position:relative;width:24px;height:14px;display:block;border-top:1px solid currentColor;border-bottom:1px solid currentColor;transition:transform .25s}
+.menu-toggle[aria-expanded=true] i{border:0;transform:rotate(90deg)}
+.menu-toggle[aria-expanded=true] i:before,.menu-toggle[aria-expanded=true] i:after{content:"";position:absolute;top:6px;left:0;width:24px;height:1px;background:#ff6b1b;transform:rotate(45deg)}
+.menu-toggle[aria-expanded=true] i:after{transform:rotate(-45deg)}
+.site-header .studio-menu{position:absolute;top:calc(100% + 14px);right:5.5%;width:min(460px,89vw);display:flex;flex-direction:column;align-items:stretch;gap:0;padding:30px;background:linear-gradient(135deg,#22231ff5,#131511fa);border:1px solid #ffffff24;box-shadow:0 30px 90px #0008;animation:menu-arrive .3s ease both}
+.studio-menu[hidden],.menu-backdrop[hidden]{display:none!important}
+.menu-eyebrow{text-align:left;font:10px var(--body);letter-spacing:2px;color:#c7a78e;padding-bottom:23px}
+.site-header .studio-menu a{display:flex;align-items:center;justify-content:space-between;padding:23px 15px;border-top:1px solid #ffffff12;font:500 24px var(--body);color:#eeeae2}
+.site-header .studio-menu a small{font:12px var(--display);color:#8c8e80}
+.site-header .studio-menu a:after{display:none!important}
+.site-header .studio-menu a:hover,.site-header .studio-menu a[aria-current=location]{background:#ff6b1b0d;color:#ff843c}
+.menu-backdrop{position:fixed;inset:0;z-index:55;background:#06090660;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);animation:menu-fade .25s ease both}
+body.menu-open{overflow:hidden}
+@keyframes menu-arrive{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:none}}
+@keyframes menu-fade{from{opacity:0}to{opacity:1}}
+
+/* Hero controls form a single dock, away from the headline and portrait. */
+.hero{grid-template-rows:minmax(0,1fr) 126px}
+.scene-content{margin-left:7%;width:53%;translate:0 -6px}
+.scene-content h1{font-size:clamp(39px,min(5.65vw,10.7cqh),100px);line-height:1.02}
+.hero .primary-button{margin-top:32px;background:linear-gradient(110deg,#ff6b1b1c,#ff6b1b04);height:52px;border-color:#ff6b1b80}
+.hero-bottom{margin:0 5.5% 22px;height:104px;padding:14px 20px;border:1px solid #ffffff17;background:linear-gradient(100deg,#191c17ee,#10130fd9);backdrop-filter:blur(14px);gap:26px}
+.chapter-control{width:160px;flex-shrink:0}
+.chapter-caption{font-size:8px;letter-spacing:1.1px;white-space:nowrap}
+.character-choice{height:72px;border-color:#ffffff12;background:#ffffff02}
+.character-choice.active{background:linear-gradient(115deg,#ff6b1b20,transparent);border-color:#ff6b1b70}
+.character-stage{height:98%;width:53%;right:1%}
+.hero-grid{opacity:.22}
+@media(max-width:900px){:root{--nav-height:78px}.site-header .brand img{width:46px;height:46px}.site-header .brand-type{font-size:27px}.hero-bottom{gap:18px;padding:12px}.chapter-control{width:115px}.chapter-caption{font-size:6px}.scene-content{margin-left:5.5%;width:59%}.scene-content h1{font-size:clamp(34px,min(5.8vw,10.2cqh),70px)}.character-stage{width:63%;right:-7%}.intro-progress-layout{gap:32px}.intro-progress-layout .intro-percent{font-size:100px}}
+@media(max-width:600px){:root{--nav-height:76px}.site-header{padding-inline:6%}.site-header .brand{gap:11px}.site-header .brand img{width:41px;height:41px}.site-header .brand-type{font-size:25px}.site-header .brand-type small{font-size:10px;letter-spacing:3px;margin-top:4px}.menu-toggle{padding:12px;gap:15px;font-size:10px}.site-header .studio-menu{right:6%;width:88vw;padding:22px}.site-header .studio-menu a{font-size:22px;padding:22px 12px}.hero{grid-template-rows:minmax(0,1fr) 94px}.scene-content{width:88%;margin:0 6%;padding-top:34px;translate:none}.scene-content h1{font-size:clamp(32px,min(9.3vw,6.3cqh),52px)}.hero .primary-button{height:41px;margin-top:22px;min-width:170px}.hero-bottom{margin:0 4% 14px;height:80px;padding:7px;gap:0}.character-choice{height:64px}.chapter-control{bottom:99px;left:8px;width:100px}.character-stage{width:84%;right:-8%;height:57%;bottom:70px}.intro-progress-layout{inset:auto 8% 8%;grid-template-columns:minmax(0,1fr) max-content;gap:25px}.intro-progress-layout .intro-percent{font-size:60px}.intro-progress-layout .intro-counter{padding-right:0;gap:4px}.intro-progress-layout .intro-loading-ui{padding-bottom:3px}.intro-loading-caption{font-size:7px;letter-spacing:.7px}.intro-track-label{font-size:6px;letter-spacing:.6px}.intro-load-status{display:none}}
+@media(max-width:370px){.intro-progress-layout{gap:19px}.intro-progress-layout .intro-percent{font-size:49px}.scene-content h1{font-size:9.2vw}.hero-bottom{margin-inline:3%}}
+@media(prefers-reduced-motion:reduce){.studio-menu,.menu-backdrop{animation:none!important}.intro-logo{opacity:1}}
+
+/* Continuous GPU-driven loading and a floating, centered brand bar. */
+.intro-loading-line{height:4px;border-radius:4px;background:#ffffff10;isolation:isolate}
+.intro-loading-line:after{display:none}
+.intro-loading-line>span{width:100%;transform:scaleX(var(--load-fraction,0));transform-origin:left center;will-change:transform;border-radius:4px;transition:none;background:linear-gradient(90deg,#b94008,#ff6b1b 70%,#ffc17d);box-shadow:0 0 18px #ff6b1b55}
+.intro-loading-line>i{height:10px;top:-3px;border-radius:2px}
+.intro-progress-layout .intro-percent{color:#ff7828;text-shadow:0 0 18px #ff6b1b65,0 0 48px #ff6b1b30;font-variant-numeric:tabular-nums;min-width:2.2em}
+:root{--nav-height:104px}
+.site-header,.site-header.is-scrolled{width:max-content;max-width:calc(100% - 32px);height:72px;margin:16px auto;position:sticky;top:16px;padding:0 18px;gap:38px;border:1px solid #ffffff24;border-radius:14px;background:#131611e8;box-shadow:0 10px 40px #0004}
+.site-header .brand{gap:13px}
+.site-header .brand img{width:43px;height:43px}
+.site-header .brand-type{font:750 20px/1.15 var(--body);letter-spacing:.2px;white-space:nowrap}
+.site-header .brand-type small{font:400 11px/1.2 var(--body);letter-spacing:3px;color:#ff7828;margin-top:5px}
+.menu-toggle{width:44px;height:44px;min-height:44px;padding:10px;justify-content:center;border-radius:8px;background:#ffffff03;flex-shrink:0}
+.menu-toggle i{width:22px}
+.site-header .studio-menu{right:0;width:min(420px,calc(100vw - 32px));border-radius:14px;top:calc(100% + 12px)}
+@media(max-width:600px){:root{--nav-height:94px}.site-header,.site-header.is-scrolled{height:66px;top:14px;margin:14px auto;padding:0 13px;gap:25px}.site-header .brand img{width:36px;height:36px}.site-header .brand{gap:10px}.site-header .brand-type{font-size:17px}.site-header .brand-type small{font-size:10px;letter-spacing:2px}.site-header .studio-menu{width:100%;padding:18px}.site-header .studio-menu a{font-size:20px;padding:20px 10px}}
+@media(max-width:370px){.site-header,.site-header.is-scrolled{gap:17px;padding:0 11px}.site-header .brand-type{font-size:16px}.menu-toggle{width:40px}.intro-progress-layout{gap:18px}}

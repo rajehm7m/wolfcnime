@@ -1,0 +1,61 @@
+/* Mystery Town — cinematic arrival and a quieter, more deliberate hero. */
+body.intro-active{overflow:hidden}
+.skip-link:not(:focus){visibility:hidden}
+.intro-screen{position:fixed;inset:0;z-index:200;background:#090a09;color:#eeeae2;overflow:hidden;display:grid;place-items:center;isolation:isolate;transition:opacity .75s ease,visibility .75s;outline:none}
+.intro-screen[hidden]{display:none}
+.intro-screen:after{content:"";position:absolute;inset:18px;border:1px solid #eeeeE20b;pointer-events:none}
+.intro-atmosphere{position:absolute;inset:-25%;z-index:-1;background:radial-gradient(ellipse at 50% 58%,#ff6b1b0e,transparent 40%);transition:opacity .6s;opacity:.8}
+.intro-edition{position:absolute;left:50%;top:8%;transform:translateX(-50%);font:10px var(--body);letter-spacing:4px;color:#777971;white-space:nowrap}
+.intro-loader{display:flex;align-items:center;flex-direction:column;width:280px;transition:opacity .3s,transform .65s cubic-bezier(.2,.8,.2,1)}
+.intro-loader.is-away{opacity:0;transform:scale(.92);pointer-events:none}
+.intro-logo-wrap{position:relative;width:170px;height:170px;margin-bottom:40px}
+.intro-logo{width:100%;height:100%;object-fit:contain;position:relative;z-index:1;animation:logo-arrive 1s cubic-bezier(.2,.8,.2,1) both}
+.intro-logo-glow{position:absolute;inset:20%;filter:blur(55px);background:#ff681b;opacity:.2;animation:logo-breathe 2.6s ease-in-out infinite alternate}
+.intro-loading-line{height:1px;width:230px;background:#ffffff17;overflow:hidden}
+.intro-loading-line>span{height:100%;display:block;width:0;background:#ff6b1b;box-shadow:0 0 16px #ff6b1b;transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.intro-loading-label{width:230px;display:flex;justify-content:space-between;margin-top:13px;font:9px var(--body);letter-spacing:1.7px;color:#8e9185}
+.intro-percent{color:#d7d4c8;font-variant-numeric:tabular-nums}
+.intro-enter{margin-top:25px;padding:16px 18px;border:1px solid #62503a;background:linear-gradient(115deg,#ff6b1b14,transparent);font:11px var(--body);letter-spacing:2px;width:280px;display:flex;align-items:center;justify-content:space-between;transition:background .3s,border-color .3s}
+.intro-enter:hover{background:#ff6b1b24;border-color:#ff6b1b}
+.intro-enter span{font-size:20px;color:#ff6b1b}.intro-enter[hidden],.intro-sound-note[hidden],.intro-loading-label[hidden]{display:none}
+.intro-sound-note{font:9px var(--body);letter-spacing:2px;color:#777b6e;margin-top:15px}
+.intro-titles{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;padding:8vw}
+.intro-title{position:absolute;width:92%;text-align:center;font:400 clamp(35px,6.8vw,112px)/1.2 var(--display);letter-spacing:-2px;margin:0;opacity:0;transform:translateY(20px) scale(.97);filter:blur(9px);transition:opacity .15s,transform .45s cubic-bezier(.16,1,.3,1),filter .3s;text-shadow:0 0 70px #ff6b1b14}
+.intro-title.is-visible{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}
+.intro-title span{display:block;font-size:.42em;letter-spacing:3px;color:#9a9c90;margin-bottom:18px}
+.intro-title[data-cue="0"]{color:#eeeae2;font-size:clamp(52px,9vw,150px)}
+.intro-title[data-cue="1"]{color:#ff782c}.intro-title[data-cue="2"]{color:#eeeae2}
+.intro-footer{position:absolute;bottom:7%;left:7%;right:7%;display:flex;align-items:center;justify-content:space-between;font:9px var(--body);letter-spacing:2px;color:#777b70;gap:20px}
+.intro-skip{background:none;font:10px var(--body);letter-spacing:2px;padding:15px 0;color:#bbbcae;display:flex;align-items:center;gap:18px}.intro-skip span{font-size:20px;color:#ff6b1b}
+.intro-screen.is-ending{opacity:0;pointer-events:none}.intro-screen.is-ending .intro-atmosphere{opacity:0}
+@keyframes logo-arrive{from{opacity:0;transform:translateY(16px) scale(.92);filter:blur(5px)}to{opacity:1;transform:none;filter:blur(0)}}
+@keyframes logo-breathe{to{opacity:.35;transform:scale(1.1)}}
+.hero{background:#11120f}
+.hero:before{opacity:.032}
+.scene-content{padding-top:clamp(64px,12vh,155px)}
+.scene-kicker{letter-spacing:3.5px;margin-bottom:32px}
+.headline-line{line-height:1.035}
+.hero .primary-button{margin-top:38px;font:12px var(--display);letter-spacing:1.2px;padding:0 22px;min-width:235px;height:53px;background:transparent;color:var(--paper);border:1px solid rgba(var(--accent-rgb),.55);position:relative;overflow:hidden}
+.hero .primary-button:before{content:"";position:absolute;inset:0;background:var(--accent);transform:translateX(-101%);transition:transform .45s cubic-bezier(.16,1,.3,1);z-index:-1}
+.hero .primary-button:hover:before{transform:translateX(0)}.hero .primary-button:hover{color:#141410}.hero .primary-button .button-mark{color:var(--accent)}.hero .primary-button:hover .button-mark{color:#141410}
+.ghost-word{top:13%;left:49%;font-size:clamp(160px,24vw,410px);letter-spacing:-12px;-webkit-text-stroke:1px rgba(var(--accent-rgb),.25);opacity:.7}
+.hero[data-scene="3"] .ghost-word{font-size:16vw;left:43%;letter-spacing:-5px}
+.light-plane{top:7%;left:59%;width:30%;transform:skewX(-16deg);border-color:rgba(var(--accent-rgb),.16);background:linear-gradient(155deg,rgba(var(--accent-rgb),.14),rgba(var(--accent-rgb),.015) 65%,transparent)}
+.character-halo{inset:10% -5% 12%;background:radial-gradient(ellipse,rgba(var(--accent-rgb),.18),transparent 68%)}
+.identity{right:4.2%;gap:12px}.identity-line{height:55px;opacity:.4}.identity-overline{letter-spacing:2.5px}
+.scene-number{opacity:.5;font-size:85px}
+.hero-bottom{padding-top:20px;bottom:26px;align-items:center}
+.chapter-caption{display:block;margin-top:15px;letter-spacing:1.8px;color:#a2a493}
+.character-choice{background:#20221a30;border-color:#d5d1bc17;backdrop-filter:blur(12px)}
+.character-choice.active{background:linear-gradient(120deg,rgba(var(--accent-rgb),.12),#14181070);border-color:rgba(var(--accent-rgb),.5)}
+.character-choice img{filter:grayscale(.45);opacity:.85}.choice-name small{color:#aaa995}
+.character-choice:before{width:28px;height:2px;left:10px;bottom:0}
+.sound-button .sound-bars{opacity:.65}.sound-label{font-size:9px;letter-spacing:1.5px}
+.experience-ready .scene-content{animation:hero-arrive .9s cubic-bezier(.16,1,.3,1) both}.experience-ready .character-stage{animation:portrait-arrive 1.2s cubic-bezier(.16,1,.3,1) both}
+@keyframes hero-arrive{from{opacity:0;translate:0 22px}to{opacity:1;translate:0 0}}
+@keyframes portrait-arrive{from{opacity:0;translate:0 45px}to{opacity:1;translate:0 0}}
+@media(min-width:901px){.ghost-word{top:1%;left:48%;font-size:27vw}}
+@media(max-width:1200px){.scene-content{padding-top:90px}.ghost-word{left:48%;top:1%;font-size:28vw}.hero .primary-button{margin-top:32px}.hero-bottom{gap:26px}}
+@media(max-width:900px){.scene-content{padding-top:70px}.scene-kicker{font-size:8px;letter-spacing:2.2px}.ghost-word{top:23%;left:51%;font-size:30vw;letter-spacing:-7px}.chapter-caption{font-size:7px;letter-spacing:1px}.hero .primary-button{font-size:11px;min-width:215px}}
+@media(max-width:600px){.hero{min-height:730px}.scene-content{padding-top:37px}.scene-kicker{font-size:7px;letter-spacing:2px;gap:8px;margin-bottom:25px}.scene-content h1{font-size:clamp(35px,9.4vw,55px)}.hero .primary-button{height:44px;min-width:180px;font-size:9px;letter-spacing:.8px;padding:0 16px;margin-top:25px}.character-stage{height:56%;bottom:60px;right:-13%;width:88%}.ghost-word{top:47%;left:7%;font-size:38vw;letter-spacing:-6px}.hero[data-scene="3"] .ghost-word{left:3%;top:46%;font-size:22vw;letter-spacing:-3px}.light-plane{left:48%;top:37%;width:50%;height:58%}.scene-number{font-size:70px;bottom:175px;opacity:.6}.hero-bottom{bottom:22px;padding-top:0}.chapter-control{margin-bottom:18px}.chapter-caption{display:none}.intro-screen:after{inset:10px}.intro-edition{font-size:8px;letter-spacing:2.5px;top:7%}.intro-logo-wrap{width:140px;height:140px}.intro-title{letter-spacing:-1px;font-size:9vw;width:94%}.intro-title span{font-size:.5em;letter-spacing:1.5px;margin-bottom:14px}.intro-title[data-cue="0"]{font-size:14vw}.intro-footer{left:8%;right:8%;font-size:7px;letter-spacing:1px;bottom:5%}.intro-skip{font-size:9px;letter-spacing:1px;gap:10px}}
+@media(prefers-reduced-motion:reduce){.intro-screen,.intro-loader,.intro-title{transition:opacity .1s!important;transform:none!important;filter:none!important}.intro-logo,.intro-logo-glow{animation:none}.experience-ready .scene-content,.experience-ready .character-stage{animation:none}}
