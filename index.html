@@ -1,1041 +1,217 @@
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WOLF CINEMA</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="download_date" content="2026-10-10T13:05:34.394Z"/>
+  
+<!-- This site is hosted on Netlify. Anyone can build and deploy a site
+     like this one for free: https://netlify.new/?utm_campaign=loops&utm_source=ai-legible&utm_medium=owned&utm_content=comment&utm_id=e6b46f0c-fe83-4df1-8f35-bf4af677a0e9
+     Netlify hosting facts for this site: static/SSR served via Netlify Edge. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#11110f">
+  <meta name="description" content="عالم MT — لكل شخصية حكاية. اكتشف الوجوه التي تصنع المدينة.">
+  <title>MT Roleplay — Leave Your Mark</title>
+  <link rel="icon" type="image/png" href="https://mtgg.netlify.app/assets/mt-logo.png">
+  <link rel="preload" href="assets/fonts/Serpentine-BoldOblique.ttf" as="font" type="font/ttf">
+  <link rel="preload" href="assets/images/mt-logo.png" as="image" fetchpriority="high">
 
-    body {
-      background-color: #0d0d11;
-      color: #ffffff;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      position: relative;
-      overflow-x: hidden;
-    }
-
-    /* أنيميشن مقدمة Wolf */
-    .wolf-intro {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background-color: #000;
-      display: none;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      perspective: 1000px;
-    }
-
-    .wolf-intro.active {
-      display: flex;
-      animation: fadeOutContainer 0.8s ease-in-out 3s forwards;
-    }
-
-    .wolf-logo-container {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      animation: zoomInLogo 2.8s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
-    }
-
-    .wolf-logo {
-      width: 160px;
-      height: 160px;
-      border-radius: 0;
-      object-fit: cover;
-      box-shadow: 0 0 50px rgba(225, 29, 72, 0.9);
-    }
-
-    .wolf-text {
-      margin-top: 15px;
-      font-size: 36px;
-      font-weight: 900;
-      letter-spacing: 4px;
-      color: #e11d48;
-      text-transform: uppercase;
-    }
-
-    @keyframes zoomInLogo {
-      0% { transform: scale(0.2); opacity: 0; filter: blur(12px); }
-      25% { opacity: 1; filter: blur(0px); transform: scale(1); }
-      70% { transform: scale(1.2); }
-      100% { transform: scale(2.8); opacity: 0; filter: blur(10px); }
-    }
-
-    @keyframes fadeOutContainer {
-      to { opacity: 0; visibility: hidden; }
-    }
-
-    /* شاشة الترحيب بالنص */
-    .welcome-screen {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background-color: #0d0d11;
-      display: none;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 8888;
-    }
-
-    .welcome-screen.active {
-      display: flex;
-      animation: welcomeFadeInOut 1.5s ease-in-out forwards;
-    }
-
-    .welcome-screen img {
-      width: 130px;
-      height: 130px;
-      object-fit: cover;
-      border: 2px solid #e11d48;
-      margin-bottom: 15px;
-      border-radius: 0;
-    }
-
-    .welcome-screen h1 {
-      font-size: 28px;
-      color: #fff;
-    }
-
-    @keyframes welcomeFadeInOut {
-      0% { opacity: 0; transform: scale(0.9); }
-      20% { opacity: 1; transform: scale(1); }
-      80% { opacity: 1; transform: scale(1); }
-      100% { opacity: 0; visibility: hidden; }
-    }
-
-    /* حاوية التحكم أعلى اليسار: صورة الحساب وتحتها اسمه، بجانب زر الإعدادات */
-    .top-left-controls {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      display: none;
-      align-items: center;
-      gap: 12px;
-      z-index: 100;
-    }
-
-    /* زر الإعدادات المربع */
-    .settings-btn {
-      width: 42px;
-      height: 42px;
-      background: #181820;
-      border: 1px solid #333;
-      color: #fff;
-      font-size: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      border-radius: 0;
-    }
-
-    /* حاوية صورة الحساب والاسم تحتها */
-    .user-profile-display {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      cursor: pointer;
-    }
-
-    .user-avatar-img {
-      width: 42px;
-      height: 42px;
-      object-fit: cover;
-      border: 1px solid #e11d48;
-      border-radius: 0;
-    }
-
-    .user-name-tag {
-      margin-top: 3px;
-      font-size: 10px;
-      color: #ccc;
-      font-weight: bold;
-      max-width: 55px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      text-align: center;
-    }
-
-    /* البنر المتحرك العلوي (بدل الكلمة القديمة) */
-    .hero-banner {
-      width: 100%;
-      max-width: 1400px;
-      height: 280px;
-      margin-top: 20px;
-      position: relative;
-      overflow: hidden;
-      display: none;
-      border-bottom: 2px solid #222;
-    }
-
-    .banner-slide {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      opacity: 0;
-      background-size: cover;
-      background-position: center;
-      transition: opacity 1s ease-in-out;
-      display: flex;
-      align-items: flex-end;
-      padding: 30px;
-    }
-
-    .banner-slide.active {
-      opacity: 1;
-    }
-
-    .banner-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(to top, #0d0d11 10%, rgba(13, 13, 17, 0.4) 60%, rgba(0,0,0,0.8));
-    }
-
-    .banner-content {
-      position: relative;
-      z-index: 2;
-    }
-
-    .banner-content h2 {
-      font-size: 32px;
-      font-weight: 900;
-      color: #fff;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.8);
-      margin-bottom: 8px;
-    }
-
-    .banner-content h2 span {
-      color: #e11d48;
-    }
-
-    .banner-content p {
-      font-size: 14px;
-      color: #bbb;
-      max-width: 500px;
-      text-shadow: 0 1px 5px rgba(0,0,0,0.8);
-    }
-
-    /* واجهة الفيديوهات بطريقة نتفليكس (عناصر أصغر، أفقية، أو شبكة منظمة) */
-    .section-title {
-      width: 95%;
-      max-width: 1400px;
-      margin: 25px auto 10px auto;
-      font-size: 20px;
-      font-weight: bold;
-      color: #fff;
-      display: none;
-      border-right: 4px solid #e11d48;
-      padding-right: 10px;
-    }
-
-    .movies-grid {
-      width: 95%;
-      max-width: 1400px;
-      margin: 0 auto 30px auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 12px;
-      opacity: 0;
-      transition: opacity 0.5s ease;
-    }
-
-    .movie-card {
-      position: relative;
-      background: #181820;
-      aspect-ratio: 16 / 9; /* شكل أفقي مصغر شبيه بنتفليكس */
-      cursor: pointer;
-      overflow: hidden;
-      border: 1px solid #222;
-      border-radius: 4px;
-      transition: transform 0.3s ease, border-color 0.3s ease;
-    }
-
-    .movie-card:hover {
-      transform: scale(1.05);
-      border-color: #e11d48;
-      z-index: 10;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.7);
-    }
-
-    .movie-card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .play-btn {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 35px;
-      height: 35px;
-      background: rgba(0, 0, 0, 0.7);
-      border: 2px solid #fff;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    .movie-card:hover .play-btn {
-      opacity: 1;
-    }
-
-    .play-btn::after {
-      content: '';
-      display: block;
-      width: 0;
-      height: 0;
-      border-top: 6px solid transparent;
-      border-bottom: 6px solid transparent;
-      border-left: 10px solid #fff;
-      margin-left: 2px;
-    }
-
-    /* النوافذ المنبثقة */
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.9);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      backdrop-filter: blur(5px);
-      z-index: 10000;
-    }
-
-    .auth-box {
-      background: #16161e;
-      padding: 30px;
-      border-radius: 0;
-      width: 90%;
-      max-width: 360px;
-      border: 1px solid #2d2d3d;
-      text-align: center;
-      position: relative;
-    }
-
-    .close-btn {
-      position: absolute;
-      top: 10px;
-      left: 15px;
-      font-size: 20px;
-      cursor: pointer;
-      color: #888;
-    }
-
-    .input-group {
-      margin-bottom: 15px;
-      text-align: right;
-    }
-
-    .input-group label {
-      display: block;
-      margin-bottom: 5px;
-      font-size: 13px;
-      color: #aaa;
-    }
-
-    .input-group input, .input-group select {
-      width: 100%;
-      padding: 10px;
-      border-radius: 0;
-      border: 1px solid #333;
-      background: #0d0d11;
-      color: #fff;
-      outline: none;
-    }
-
-    .password-container {
-      position: relative;
-      display: flex;
-      align-items: center;
-    }
-
-    .password-container input {
-      width: 100%;
-    }
-
-    .toggle-pass {
-      position: absolute;
-      left: 10px;
-      background: none;
-      border: none;
-      color: #aaa;
-      cursor: pointer;
-      font-size: 13px;
-    }
-
-    .toggle-pass:hover {
-      color: #fff;
-    }
-
-    .btn {
-      width: 100%;
-      padding: 11px;
-      background: #e11d48;
-      border: none;
-      border-radius: 0;
-      color: white;
-      font-size: 15px;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-
-    .btn:hover { background: #be123c; }
-
-    .switch-btn {
-      background: transparent;
-      border: 1px solid #e11d48;
-      color: #e11d48;
-    }
-
-    .logout-btn {
-      background: #282830;
-      margin-top: 20px;
-    }
-
-    .logout-btn:hover { background: #e11d48; }
-
-    .msg {
-      margin-top: 12px;
-      font-size: 13px;
-      color: #ff5555;
-    }
-  </style>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/experience.css">
+  <link rel="stylesheet" href="css/arrival.css">
+  <link rel="stylesheet" href="css/studio.css">
+  <link rel="stylesheet" href="css/motion.css">
+  <link rel="stylesheet" href="css/stories.css">
+  <link rel="stylesheet" href="css/memories.css">
+  <link rel="stylesheet" href="css/refinements.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/city-access.css">
+  <link rel="stylesheet" href="css/story-fit.css">
+  <link rel="stylesheet" href="css/pixel-buttons.css">
+  <link rel="stylesheet" href="css/community.css">
+  <link rel="stylesheet" href="css/finishing.css">
+  <link rel="stylesheet" href="css/chapters.css">
+  <link rel="stylesheet" href="css/hero-cipher.css">
+  <link rel="stylesheet" href="css/character-dock.css">
+  <link rel="stylesheet" href="css/evolution.css">
+  <link rel="stylesheet" href="css/dossiers.css">
+  <link rel="stylesheet" href="css/city-map.css">
+  <link rel="stylesheet" href="css/tactical-board.css">
+  <link rel="stylesheet" href="css/archive-design.css">
+  <script src="js/asset-queue.js" defer=""></script>
+  <script src="js/intelligence-content.js" defer=""></script>
+  <script src="js/app.js" defer=""></script>
+  <script src="js/intro.js" defer=""></script>
+  <script src="js/stories.js" defer=""></script>
+  <script src="js/memory-content.js" defer=""></script>
+  <script src="js/memory-viewer.js" defer=""></script>
+  <script src="js/memories.js" defer=""></script>
+  <script src="js/memory-input.js" defer=""></script>
+  <script src="js/scroll-motion.js" defer=""></script>
+  <script src="js/city-access.js" defer=""></script>
+  <script src="js/wordmark.js" defer=""></script>
+  <script src="js/pixel-buttons.js" defer=""></script>
+  <script src="js/portal-shapes.js" defer=""></script>
+  <script src="js/evolution-content.js" defer=""></script>
+  <script src="js/evolution.js" defer=""></script>
+  <script src="js/chapters.js" defer=""></script>
+  <script src="js/hero-cipher.js" defer=""></script>
+  <script src="js/character-electricity.js" defer=""></script>
+  <script src="js/dossiers.js" defer=""></script>
+  <script src="js/city-map.js" defer=""></script>
+  <script src="js/tactical-board.js" defer=""></script>
+  <script src="js/partners.js" defer=""></script>
+  <script src="js/timeline-electricity.js" defer=""></script>
 </head>
-<body>
-
-  <!-- 1. نافذة التسجيل/الدخول -->
-  <div class="modal-overlay" id="authModal">
-    <div class="auth-box" id="stepChoice">
-      <h2 style="margin-bottom: 15px;" data-i18n="welcomeTitle">مرحباً بك في WOLF CINEMA</h2>
-      <button class="btn" onclick="showForm('login')" data-i18n="loginBtn">تسجيل الدخول</button>
-      <button class="btn switch-btn" onclick="showForm('register')" data-i18n="registerBtn">إنشاء حساب</button>
+<body class="intro-active">
+  <section class="intro-screen" id="intro" role="dialog" aria-modal="true" aria-label="Welcome to Rules Town" dir="ltr" tabindex="-1" data-state="loading">
+    <div class="intro-atmosphere" aria-hidden="true"></div>
+    <div class="intro-scenery" aria-hidden="true"><div class="intro-dust"></div></div>
+    <button class="intro-audio-enable" type="button" hidden="" aria-label="تشغيل صوت الافتتاحية"><span class="intro-audio-icon" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="intro-audio-copy"><strong>ENABLE SOUND</strong><small>Hear the story</small></span><span class="intro-audio-arrow" aria-hidden="true">↗</span></button>
+    <div class="intro-loader"><div class="intro-logo-wrap"><svg class="intro-logo-outline" viewBox="0 0 420 420" aria-hidden="true"><path d="M205,99 L207,99 L207,98 L392,98 L392,99 L397,100 L397,101 L401,104 L401,106 L402,106 L402,108 L403,108 L403,205 L400,206 L400,204 L399,204 L399,202 L398,202 L398,199 L397,199 L397,196 L396,196 L396,194 L395,194 L395,191 L394,191 L394,188 L393,188 L393,186 L392,186 L392,183 L391,183 L391,181 L390,181 L389,175 L388,175 L388,173 L387,173 L387,170 L386,170 L386,168 L385,168 L385,165 L384,165 L382,159 L380,158 L380,156 L379,156 L373,149 L371,149 L370,147 L368,147 L368,146 L366,146 L366,145 L363,145 L363,144 L360,144 L360,143 L217,143 L217,144 L214,144 L214,145 L208,150 L208,152 L207,152 L206,155 L203,157 L203,159 L200,161 L200,163 L198,164 L198,166 L195,168 L195,170 L194,170 L193,173 L190,175 L190,177 L188,178 L188,180 L185,182 L185,184 L183,185 L183,187 L180,189 L180,191 L178,192 L178,194 L175,196 L175,198 L172,200 L172,202 L170,203 L170,205 L169,205 L169,206 L167,207 L167,209 L164,211 L164,213 L162,214 L162,216 L161,216 L161,217 L159,218 L159,220 L156,222 L156,224 L154,225 L154,227 L153,227 L153,228 L151,229 L151,231 L148,233 L148,235 L146,236 L146,238 L145,238 L145,239 L143,240 L143,242 L140,244 L140,246 L138,247 L138,249 L137,249 L137,250 L135,251 L135,253 L132,255 L132,257 L130,258 L130,260 L129,260 L129,261 L127,262 L127,264 L126,264 L124,267 L122,267 L122,268 L117,268 L117,267 L112,263 L112,261 L109,259 L109,257 L107,256 L107,254 L104,252 L104,250 L102,249 L102,247 L101,247 L101,246 L99,245 L99,243 L96,241 L96,239 L94,238 L94,236 L91,234 L91,232 L90,232 L89,229 L86,227 L86,225 L85,225 L84,222 L81,220 L81,218 L80,218 L79,215 L76,213 L76,211 L73,209 L73,207 L72,207 L68,202 L65,202 L65,203 L62,205 L62,330 L61,330 L61,332 L60,332 L59,334 L56,334 L56,335 L23,335 L23,334 L21,334 L21,333 L18,331 L18,329 L17,329 L17,108 L18,108 L18,105 L19,105 L23,100 L28,99 L28,98 L42,98 L42,99 L47,99 L47,100 L53,101 L53,102 L55,102 L56,104 L58,104 L58,105 L66,112 L66,114 L68,115 L69,119 L71,120 L71,122 L72,122 L73,125 L75,126 L76,130 L78,131 L78,133 L80,134 L81,138 L82,138 L83,141 L85,142 L86,146 L87,146 L88,149 L90,150 L91,154 L93,155 L93,157 L94,157 L95,160 L97,161 L98,165 L99,165 L100,168 L102,169 L103,173 L104,173 L105,176 L107,177 L108,181 L109,181 L110,184 L112,185 L112,187 L113,187 L113,189 L115,190 L115,192 L118,193 L118,194 L121,194 L121,193 L123,193 L124,190 L127,188 L127,186 L129,185 L129,183 L131,182 L131,180 L134,178 L135,174 L138,172 L138,170 L140,169 L140,167 L142,166 L142,164 L144,163 L144,161 L146,160 L146,158 L149,156 L149,154 L151,153 L151,151 L153,150 L153,148 L155,147 L155,145 L157,144 L157,142 L159,141 L159,139 L161,138 L161,136 L164,134 L164,132 L166,131 L166,129 L168,128 L168,126 L170,125 L170,123 L172,122 L172,120 L175,118 L175,116 L180,112 L180,110 L182,110 L185,106 L187,106 L188,104 L190,104 L190,103 L192,103 L192,102 L195,102 L195,101 L201,100 L201,99 L205,99 Z" pathLength="1" style="--stroke-delay:0ms"></path><path d="M313,167 L328,167 L328,168 L330,168 L330,169 L332,170 L332,172 L333,172 L333,330 L332,330 L332,332 L329,333 L328,335 L287,335 L287,334 L285,334 L285,333 L282,331 L282,327 L281,327 L281,174 L282,174 L282,171 L283,171 L286,167 L313,167 Z" pathLength="1" style="--stroke-delay:100ms"></path><path d="M182,250 L182,231 L183,231 L184,226 L185,226 L186,223 L189,221 L189,219 L192,217 L192,215 L193,215 L194,212 L197,210 L197,208 L198,208 L199,205 L202,203 L202,201 L205,199 L205,197 L206,197 L207,194 L210,192 L210,190 L213,188 L213,186 L214,186 L215,183 L218,181 L218,179 L221,177 L221,175 L223,174 L223,172 L224,172 L227,168 L231,168 L231,169 L232,169 L232,171 L233,171 L233,328 L232,328 L232,331 L231,331 L229,334 L227,334 L227,335 L188,335 L188,334 L185,334 L185,333 L183,332 L183,330 L182,330 L182,250 Z" pathLength="1" style="--stroke-delay:200ms"></path></svg><img src="assets/images/mt-logo.png" width="280" height="280" alt="MT" class="intro-logo"><span class="intro-logo-glow" aria-hidden="true"></span></div></div>
+    <div class="intro-progress-layout">
+      <div class="intro-loading-ui"><div class="intro-loading-caption"><span>PREPARING YOUR ARRIVAL</span><span class="intro-load-status">DRAWING THE MARK</span></div><div class="intro-loading-line" role="progressbar" aria-label="Loading Rules Town" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span></span><i aria-hidden="true"></i></div><span class="intro-track-label">YOUR NEXT CHAPTER IS LOADING.</span></div>
+      <div class="intro-counter" aria-hidden="true"><span class="intro-percent">000</span><small>%</small></div>
     </div>
+    <div class="intro-titles" aria-live="off"><p class="intro-title" data-cue="0" aria-hidden="true"><span>Welcome</span></p><p class="intro-title" data-cue="1" aria-hidden="true"><span>To</span> <b>The</b></p><p class="intro-title" data-cue="2" aria-hidden="true"><span>Mystery</span> <b>Town</b></p><p class="intro-title" data-cue="3" aria-hidden="true"><span>Where</span> <b>Dreams</b></p><p class="intro-title" data-cue="4" aria-hidden="true"><span>Come</span> <b>True</b></p></div>
+  </section>
+  <noscript><style>.intro-screen{display:none!important}body.intro-active{overflow:auto!important}</style></noscript>
+  <a class="skip-link" href=".">تجاوز إلى المحتوى</a>
+  <header class="site-header" dir="ltr">
+    <a class="brand" href="." aria-label="MT Roleplay — البداية">
+      <span class="brand-mark"><img data-src="assets/images/mt-logo.png" width="52" height="52" alt="MT"></span>
+      <span class="brand-type"><span class="brand-name" data-text="Rules Town">Rules Town</span><small data-text="Studio">Studio</small></span>
+    </a>
+    <button class="menu-toggle" type="button" aria-label="فتح القائمة" aria-expanded="false" aria-controls="studio-menu"><i aria-hidden="true"></i></button>
+    <nav class="studio-menu" id="studio-menu" aria-label="التنقل الرئيسي" dir="rtl" hidden="">
+      <span class="menu-eyebrow" dir="ltr">EXPLORE Rules Town</span>
+      <a class="nav-home" href="."><span>البداية</span><small>01</small></a>
+      <a href="."><span>اختر قصتك</span><small>02</small></a>
+      <a href="."><span>ذكريات المدينة</span><small>03</small></a>
+      <a href="."><span>استكشف المدينة</span><small>04</small></a>
+      <a href="."><span>دخول المدينة</span><small>05</small></a>
+      <a href="."><span>الشركاء</span><small>06</small></a>
+    <a class="nav-store" data-pixel-button="" href="https://mtrp.store/" target="_blank" rel="noopener noreferrer" aria-label="المتجر — يفتح في نافذة جديدة"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 7h14l1 14H4L5 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path><path d="M8 8V6a4 4 0 0 1 8 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg><span>المتجر</span></a>
+    </nav>
+  </header>
+  <div class="menu-backdrop" data-menu-close="" hidden="" aria-hidden="true"></div>
 
-    <div class="auth-box" id="stepLogin" style="display: none;">
-      <span class="close-btn" onclick="showStep(stepChoice)">✕</span>
-      <h2 style="margin-bottom: 15px;" data-i18n="loginTitle">تسجيل الدخول</h2>
-      <div class="input-group">
-        <label data-i18n="usernameLabel">اسم المستخدم</label>
-        <input type="text" id="loginUser" onpaste="return false;" oncopy="return false;" oncut="return false;">
+  <main id="main">
+    <section class="hero" id="home" aria-roledescription="عرض شخصيات" aria-label="شخصيات عالم MT" dir="ltr" tabindex="-1">
+      <div class="ambient" aria-hidden="true"></div>
+      <div class="light-plane" aria-hidden="true"></div>
+      <div class="hero-grid" aria-hidden="true"></div>
+      <div class="ghost-word" aria-hidden="true">F-0</div>
+      <div class="ambient-particles" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="scene-content">
+        <div class="headline-window">
+          <h1 id="hero-title"><span class="headline-line">TRUST</span><span class="headline-line">NO ONE.</span><span class="headline-line accent">REMEMBER</span><span class="headline-line accent">EVERYTHING.</span></h1>
+        </div>
+        <a class="primary-button" href="."><span>EXPLORE THE ARCHIVE</span><span class="button-mark" aria-hidden="true">+</span></a>
       </div>
-      <div class="input-group">
-        <label data-i18n="passwordLabel">كلمة المرور</label>
-        <div class="password-container">
-          <input type="password" id="loginPass" onpaste="return false;" oncopy="return false;" oncut="return false;">
-          <button type="button" class="toggle-pass" onclick="togglePassword('loginPass', this)" data-i18n="showPass">إظهار</button>
+      <div class="character-stage" aria-hidden="true">
+        <div class="character-halo"></div>
+        <div class="character-layer current"><img class="hero-character" data-src="assets/images/abdulsamad.webp" width="1024" height="1536" alt="" fetchpriority="high" draggable="false"></div>
+        <div class="character-layer standby"><img class="hero-character" data-src="assets/images/mhna.webp" width="1024" height="1536" alt="" draggable="false"></div>
+        <div class="character-vignette"></div>
+      </div>
+      <div class="identity" aria-hidden="true"><span class="identity-overline">THE ART OF DISTRUST</span><span class="identity-name"></span><span class="identity-line"></span></div>
+      <div class="scene-number" aria-hidden="true">01</div>Rif
+      <div class="hero-bottom">
+        <div class="chapter-control">
+          <div class="chapter-top"><span class="chapter-current">01</span><span class="chapter-divider">/</span><span class="chapter-total">04</span></div>
+          <span class="chapter-caption">SELECT YOUR STORY</span>
+        </div>
+        <div class="character-selectors" role="group" aria-label="Choose a character">
+          <button class="character-choice active" data-scene="0" aria-pressed="true" aria-label="Select Rif"><span class="choice-number">01</span><img data-src="assets/images/abdulsamad.webp" alt="" width="66" height="85"><span class="choice-name">Rif<small>THE SECRET</small></span><span class="choice-indicator" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M2 6h8M6 2l4 4-4 4"></path></svg></span></button>
+          <button class="character-choice" data-scene="1" aria-pressed="false" aria-label="Select FIB"><span class="choice-number">02</span><img data-src="assets/images/mhna.webp" alt="" width="66" height="85"><span class="choice-name">FIB<small>THE POWER</small></span><span class="choice-indicator" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M2 6h8M6 2l4 4-4 4"></path></svg></span></button>
+          <button class="character-choice" data-scene="2" aria-pressed="false" aria-label="Select S.W.A.T"><span class="choice-number">03</span><img data-src="assets/images/vladi.webp" alt="" width="66" height="85"><span class="choice-name">S.W.A.T<small>THE WATCH</small></span><span class="choice-indicator" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M2 6h8M6 2l4 4-4 4"></path></svg></span></button>
+          <button class="character-choice" data-scene="3" aria-pressed="false" aria-label="Select ANONYMOUS"><span class="choice-number">04</span><img data-src="assets/images/Snake.webp" alt="" width="66" height="85"><span class="choice-name">ANONYMOUS<small>THE DECISION</small></span><span class="choice-indicator" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M2 6h8M6 2l4 4-4 4"></path></svg></span></button>
+        </div>
+
+      </div>
+      <p class="sr-only scene-status" aria-live="polite" aria-atomic="true"></p>
+    </section>
+
+    <section class="story-section" id="stories" aria-labelledby="stories-title">
+      <div class="story-heading"><span class="story-eyebrow">THE CITY IS YOURS TO WRITE</span><h2 id="stories-title" dir="ltr">CHOOSE YOUR<br><em>STORY.</em></h2><p>احمِ، أنقذ، جازف، أو اصنع حياة بطريقتك.<br>اختر بطاقتك واكتشف أين تبدأ حكايتك.</p></div>
+      <div class="story-hand" dir="ltr" aria-label="اختر مسار شخصيتك">
+        <button class="story-card story-police" data-story="police" aria-haspopup="dialog" aria-label="اكتشف قصة الشرطة"><span class="story-corner">01<span>♠</span></span><span class="story-card-kicker">PROTECT THE CITY</span><img data-src="assets/images/police-bintallal.webp" alt="" loading="lazy" width="1024" height="1536"><span class="story-card-title">POLICE<small dir="rtl">احمِ المدينة</small></span><span class="story-card-action">REVEAL YOUR STORY <b>+</b></span></button>
+        <button class="story-card story-medic" data-story="medic" aria-haspopup="dialog" aria-label="اكتشف قصة الإسعاف"><span class="story-corner">02<span>♥</span></span><span class="story-card-kicker">EVERY SECOND COUNTS</span><img data-src="assets/images/medic.webp" alt="" loading="lazy" width="1024" height="1536"><span class="story-card-title">MEDIC<small dir="rtl">كن أمل المدينة</small></span><span class="story-card-action">REVEAL YOUR STORY <b>+</b></span></button>
+        <button class="story-card story-criminal" data-story="criminal" aria-haspopup="dialog" aria-label="اكتشف قصة المجرم"><span class="story-corner">03<span>♣</span></span><span class="story-card-kicker">LIVE ON THE EDGE</span><img data-src="assets/images/criminal.webp" alt="" loading="lazy" width="1024" height="1536"><span class="story-card-title">CRIMINAL<small dir="rtl">كل قرار له ثمن</small></span><span class="story-card-action">REVEAL YOUR STORY <b>+</b></span></button>
+        <button class="story-card story-citizen" data-story="citizen" aria-haspopup="dialog" aria-label="اكتشف قصة المواطن"><span class="story-corner">04<span>♦</span></span><span class="story-card-kicker">BUILD YOUR OWN WORLD</span><img data-src="assets/images/citizen.webp" alt="" loading="lazy" width="1024" height="1536"><span class="story-card-title">CITIZEN<small dir="rtl">اصنع حياتك</small></span><span class="story-card-action">REVEAL YOUR STORY <b>+</b></span></button>
+      </div>
+      <div class="story-quick-select" role="group" aria-label="فتح بطاقة الدور"><button type="button" data-story-open="police"><span>♠</span> الشرطة</button><button type="button" data-story-open="medic"><span>♥</span> الإسعاف</button><button type="button" data-story-open="criminal"><span>♣</span> المجرم</button><button type="button" data-story-open="citizen"><span>♦</span> المواطن</button></div>
+      <span class="story-footnote">اختر دورك. واكتب حكايتك.</span>
+    </section>
+
+    <section class="memories-section" id="memories" aria-labelledby="memories-title">
+      <div class="memories-heading"><div><span class="memory-eyebrow" dir="ltr">MT / THE MEMORY ARCHIVE</span><h2 id="memories-title" dir="ltr">MOMENTS FADE.<br><em>STORIES STAY.</em></h2></div><div class="memories-intro"><p>هنا تبقى لحظات المدينة.<br>ذكريات تستحق أن تُروى.</p></div></div>
+      <div class="memory-window" dir="ltr"><div class="memory-track"><div class="memory-group">
+        <figure class="memory-frame"><div class="memory-photo"><span class="memory-stamp">MT ARCHIVE / 001</span><img data-src="assets/images/memory-mtz-end.webp" alt="Soon..." loading="lazy" width="1200" height="675"></div><figcaption><span dir="ltr">MTZ END</span><small>01 / SERVER EVENT</small></figcaption></figure>
+        <figure class="memory-frame"><div class="memory-photo"><span class="memory-stamp">MT ARCHIVE / 002</span><img data-src="assets/images/memory-killer-abdulsamad.webp" alt="الحرب بين اليكس والحامي ضد الفلج" loading="lazy" width="1200" height="800"></div><figcaption><span dir="rtl">الحرب بين كيلر وعبد الصمد</span><small>02 / CITY WAR</small></figcaption></figure>
+        <figure class="memory-frame"><div class="memory-photo"><span class="memory-stamp">MT ARCHIVE / 003</span><img data-src="assets/images/memory-final-war.webp" alt="soon..." loading="lazy" width="720" height="480"></div><figcaption><span dir="rtl">الحرب الأخيرة</span><small>03 / THE FINAL WAR</small></figcaption></figure>
+        <figure class="memory-frame"><div class="memory-photo"><span class="memory-stamp">MT ARCHIVE / 004</span><img data-src="assets/images/memory-formula-founding-day.webp" alt="ذكرى الفورميلا في يوم التأسيس" loading="lazy" width="1200" height="686"></div><figcaption><span dir="rtl">الفورميلا — يوم التأسيس</span><small>04 / FOUNDING DAY</small></figcaption></figure>
+      </div></div></div>
+      <div class="memories-bottom" dir="ltr"><span>A CITY WORTH REMEMBERING.</span><span>MORE MEMORIES. SOON. ↗</span></div>
+    </section>
+
+    <section class="city-map-section" id="city-map" aria-labelledby="city-map-title" dir="ltr">
+      <div class="city-map-heading"><div><span class="map-eyebrow">MT / CITY ATLAS</span><h2 id="city-map-title">YOUR CITY.<br><em>YOUR MOVE.</em></h2></div><p dir="rtl">مدينة تتّسع لكل الاحتمالات.<br>اقترب، استكشف، واتبع فضولك.</p></div>
+      <div class="map-console">
+        <div class="map-viewport" tabindex="0" role="group" aria-label="خريطة ميستري تاون التفاعلية" aria-describedby="map-help">
+          <div class="map-world"><img data-src="assets/images/city-map-detail.webp" width="1240" height="1269" alt="خريطة عالم ميستري تاون" loading="lazy" draggable="false"><div class="map-scan-mask" aria-hidden="true"><div class="map-sweep"></div></div><span class="map-ping" hidden="" aria-hidden="true"></span><span class="map-mouse" hidden="" aria-hidden="true"></span></div>
+          <div class="map-overlay-top" aria-hidden="true"><b>Rules Town / TERRAIN</b><span class="map-compass">N ↑</span></div>
+          <div class="map-controls" role="group" aria-label="أدوات الخريطة"><button type="button" data-map-action="out" aria-label="تصغير الخريطة">−</button><button type="button" data-map-action="in" aria-label="تقريب الخريطة">+</button><button type="button" data-map-action="reset" aria-label="عرض الخريطة كاملة">⌖</button></div>
+          <div class="map-overlay-bottom" aria-hidden="true"><span>GRID <strong class="map-grid-value">— / —</strong></span><span>ZOOM <strong class="map-zoom-value">1.0×</strong></span></div>
+        </div>
+        <aside class="map-sidebar" aria-label="استكشاف الخريطة">
+          <div class="map-sidebar-top"><span>EXPLORE THE UNKNOWN</span><img src="assets/images/mt-logo.png" alt="" width="34" height="28"></div>
+          <div aria-live="polite" aria-atomic="true"><span class="map-location-label">AN OPEN WORLD</span><h3 class="map-location-name">حكايتك تبدأ من هنا.</h3><p class="map-location-description">من شوارع المدينة إلى أبعد نقطة في الأفق. حرّك الخريطة واكتشف حجم العالم الذي ينتظرك.</p></div>
+          <img class="map-location-photo" hidden="" alt="">
+          <div class="map-location-list" hidden=""></div>
+          <div class="map-instructions" id="map-help"><span>اسحب للاستكشاف <b>DRAG</b></span><span>قرّب بأصبعين أو بالأزرار <b>ZOOM</b></span><span class="map-desktop-hint">تقريب بالماوس <b>ALT + SCROLL</b></span></div>
+          <span class="map-sidebar-foot"><i aria-hidden="true"></i> YOUR NEXT COORDINATES</span>
+        </aside>
+      </div>
+    </section>
+
+    <section class="city-access" id="connect" aria-labelledby="connect-title" dir="ltr">
+      <div class="access-content">
+        <div class="access-heading">
+          <div class="access-topline"><span class="access-partners"><span class="access-index">Rules Town</span><span class="access-partner-cross" aria-hidden="true">×</span><img data-src="assets/images/fivem-logo.png" width="28" height="28" alt="FiveM"></span><span class="access-platform">FIVEM EXPERIENCE</span></div>
+          <div class="access-invitation"><img class="access-brand" src="assets/images/mt-logo.png" width="140" height="140" alt="MT"><div><h2 class="access-title" id="connect-title" dir="rtl">المدينة تنتظرك.</h2><span class="access-caption">MAKE YOUR ENTRANCE.</span></div></div>
+          <div class="access-bottomline"><span>YOUR NEXT STORY STARTS HERE</span><span aria-hidden="true">✦</span></div>
+        </div>
+        <div class="access-actions"><span class="access-tear-line" aria-hidden="true"></span>
+          <a class="access-connect" href="fivem://noting?&amp;pure_1" aria-label="الدخول إلى ميستري تاون عبر FiveM"><span class="access-cta-top">Rules Town <small>↗</small></span><span class="access-connect-icon" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none"><path d="M15 49 49 15M15 15h34v34" stroke="currentColor" stroke-width="2" stroke-linecap="square"></path></svg></span><span class="access-cta-label" dir="rtl">دخول السيرفر<span>ابدأ حكايتك</span></span></a>
+          <p class="access-status" role="status" aria-live="polite" dir="rtl"></p>
         </div>
       </div>
-      <button class="btn" onclick="handleLogin()" data-i18n="enterBtn">دخول</button>
-      <div class="msg" id="loginMsg"></div>
+    </section>
+    <section id="evolution" aria-labelledby="evolution-title" hidden=""></section>
+    <section class="partners-section" id="partners" aria-labelledby="partners-title" dir="ltr">
+      <svg class="partner-filter" aria-hidden="true" width="0" height="0"><defs><filter id="partner-orange" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values=".2126 .7152 .0722 0 0 .2126 .7152 .0722 0 0 .2126 .7152 .0722 0 0 0 0 0 1 0"></feColorMatrix><feComponentTransfer><feFuncR type="gamma" amplitude="1" exponent=".22" offset="0"></feFuncR><feFuncG type="gamma" amplitude="1" exponent=".22" offset="0"></feFuncG><feFuncB type="gamma" amplitude="1" exponent=".22" offset="0"></feFuncB></feComponentTransfer><feComponentTransfer><feFuncR type="linear" slope=".92" intercept=".08"></feFuncR><feFuncG type="linear" slope=".44" intercept=".045"></feFuncG><feFuncB type="linear" slope=".11" intercept=".015"></feFuncB></feComponentTransfer></filter></defs></svg>
+      <div class="partners-heading"><h2 id="partners-title">IN GOOD<br><em>COMPANY.</em></h2><span dir="rtl">شركاء الرحلة<span aria-hidden="true">↗</span></span></div>
+      <div class="partners-grid"><button class="partner-mark partner-fivem" type="button" aria-pressed="false" aria-label="إظهار ألوان شعار FiveM" style="--partner-order:0"><img data-src="assets/images/partners/fivem.webp" alt="FiveM" width="180" height="95" decoding="async"><span>FiveM</span></button><button class="partner-mark partner-inbox" type="button" aria-pressed="false" aria-label="إظهار ألوان شعار INBOX" style="--partner-order:1"><img data-src="assets/images/partners/inbox.webp" alt="INBOX" width="180" height="95" decoding="async"><span>INBOX</span></button><button class="partner-mark partner-jahez" type="button" aria-pressed="false" aria-label="إظهار ألوان شعار جاهز" style="--partner-order:2"><img data-src="assets/images/partners/jahez.webp" alt="جاهز" width="180" height="95" decoding="async"><span>جاهز</span></button><button class="partner-mark partner-kick" type="button" aria-pressed="false" aria-label="إظهار ألوان شعار KICK" style="--partner-order:3"><img data-src="assets/images/partners/kick.webp" alt="KICK" width="180" height="95" decoding="async"><span>KICK</span></button><button class="partner-mark partner-powr" type="button" aria-pressed="false" aria-label="إظهار ألوان شعار POWR" style="--partner-order:4"><img data-src="assets/images/partners/powr.webp" alt="POWR" width="180" height="95" decoding="async"><span>POWR</span></button><button class="partner-mark partner-rockstar" type="button" aria-pressed="false" aria-label="إظهار ألوان شعار Rockstar Games" style="--partner-order:5"><img data-src="assets/images/partners/rockstar.webp" alt="Rockstar Games" width="180" height="95" decoding="async"><span>Rockstar Games</span></button><button class="partner-mark partner-saudiairlines" type="button" aria-pressed="false" aria-label="إظهار ألوان شعار السعودية" style="--partner-order:6"><img data-src="assets/images/partners/saudiairlines.webp" alt="السعودية" width="180" height="95" decoding="async"><span>السعودية</span></button><button class="partner-mark partner-shawarmar" type="button" aria-pressed="false" aria-label="إظهار ألوان شعار شاورمر" style="--partner-order:7"><img data-src="assets/images/partners/shawarmar.webp" alt="شاورمر" width="180" height="95" decoding="async"><span>شاورمر</span></button><button class="partner-mark partner-stc" type="button" aria-pressed="false" aria-label="إظهار ألوان شعار stc" style="--partner-order:8"><img data-src="assets/images/partners/stc.webp" alt="stc" width="180" height="95" decoding="async"><span>stc</span></button><button class="partner-mark partner-tebex" type="button" aria-pressed="false" aria-label="إظهار ألوان شعار Tebex" style="--partner-order:9"><img data-src="assets/images/partners/tebex.webp" alt="Tebex" width="180" height="95" decoding="async"><span>Tebex</span></button><button class="partner-mark partner-zain" type="button" aria-pressed="false" aria-label="إظهار ألوان شعار زين" style="--partner-order:10"><img data-src="assets/images/partners/zain.webp" alt="زين" width="180" height="95" decoding="async"><span>زين</span></button></div>
+    </section>
+  </main>
+  <footer class="site-footer" dir="ltr" aria-label="Rules Town Studio">
+    <div class="footer-top">
+      <a class="footer-brand" href="." aria-label="Rules Town — العودة للبداية"><span class="brand-mark"><img src="assets/images/mt-logo.png" alt="MT" width="50" height="50"></span><span class="footer-brand-type"><span class="footer-brand-name" data-text="Rules Town">Rules Town</span><small>STUDIO</small></span></a>
+      <div class="footer-actions"><a class="footer-discord" href="https://discord.gg/mt" target="_blank" rel="noopener noreferrer"><span>Discord</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.32 4.37a19.8 19.8 0 0 0-4.89-1.52l-.6 1.23a18.3 18.3 0 0 0-5.66 0l-.6-1.23a19.8 19.8 0 0 0-4.89 1.52C.59 8.91-.25 13.34.17 17.7a19.7 19.7 0 0 0 6 3.03l1.27-2.07a12.7 12.7 0 0 1-1.98-.95l.49-.38a14.1 14.1 0 0 0 12.1 0l.49.38c-.63.37-1.3.69-1.98.95l1.27 2.07a19.7 19.7 0 0 0 6-3.03c.49-5.06-.84-9.45-3.51-13.33ZM8.02 15.05c-1.17 0-2.13-1.08-2.13-2.4s.94-2.4 2.13-2.4c1.2 0 2.15 1.09 2.13 2.4 0 1.32-.94 2.4-2.13 2.4Zm7.96 0c-1.17 0-2.13-1.08-2.13-2.4s.94-2.4 2.13-2.4c1.2 0 2.15 1.09 2.13 2.4 0 1.32-.93 2.4-2.13 2.4Z"></path></svg></a>
+      <a class="footer-store" data-pixel-button="" href="https://mtrp.store/" target="_blank" rel="noopener noreferrer" aria-label="متجر Rules Town — يفتح في نافذة جديدة"><span>المتجر</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 7h14l1 14H4L5 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path><path d="M8 8V6a4 4 0 0 1 8 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg></a></div>
     </div>
-
-    <div class="auth-box" id="stepRegister" style="display: none;">
-      <span class="close-btn" onclick="showStep(stepChoice)">✕</span>
-      <h2 style="margin-bottom: 15px;" data-i18n="registerTitle">إنشاء حساب جديد</h2>
-      <div class="input-group">
-        <label data-i18n="regUserLabel">اسم المستخدم (ثنائي وفوق)</label>
-        <input type="text" id="regUser" onpaste="return false;" oncopy="return false;" oncut="return false;">
-      </div>
-      <div class="input-group">
-        <label data-i18n="passwordLabel">كلمة المرور</label>
-        <div class="password-container">
-          <input type="password" id="regPass" onpaste="return false;" oncopy="return false;" oncut="return false;">
-          <button type="button" class="toggle-pass" onclick="togglePassword('regPass', this)" data-i18n="showPass">إظهار</button>
-        </div>
-      </div>
-      <button class="btn" onclick="handleRegister()" data-i18n="createAccBtn">إنشاء الحساب</button>
-      <div class="msg" id="regMsg"></div>
+    <div class="footer-wordmark" aria-hidden="true"><svg class="wordmark-art" xmlns="http://www.w3.org/2000/svg" viewBox="-25 -665 9834 690" aria-hidden="true"><defs><linearGradient id="wordmark-outline" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#ff7828"></stop><stop offset=".45" stop-color="#ff7828" stop-opacity=".72"></stop><stop offset="1" stop-color="#ff7828" stop-opacity=".12"></stop></linearGradient></defs><g class="wordmark-glyph" data-letter="M"><rect class="wordmark-hit" x="0" y="-640" width="1077" height="640" fill="transparent"></rect><path class="wordmark-outline" d="M529 -277H527L496 -640H160Q169 -619 169 -602Q169 -591 165.5 -573.0Q162 -555 155 -525L53 -115Q46 -88 41.0 -71.0Q36 -54 30.5 -42.0Q25 -30 18.0 -20.5Q11 -11 0 0H154Q145 -21 145 -38Q145 -58 159 -115L256 -504H258L304 0H473L776 -504H778L679 -110Q669 -68 658.5 -44.5Q648 -21 632 0H917Q912 -19 912 -37Q912 -64 923 -110L1028 -530Q1039 -573 1050.0 -596.0Q1061 -619 1077 -640H750Z"></path><path class="wordmark-fill" d="M529 -277H527L496 -640H160Q169 -619 169 -602Q169 -591 165.5 -573.0Q162 -555 155 -525L53 -115Q46 -88 41.0 -71.0Q36 -54 30.5 -42.0Q25 -30 18.0 -20.5Q11 -11 0 0H154Q145 -21 145 -38Q145 -58 159 -115L256 -504H258L304 0H473L776 -504H778L679 -110Q669 -68 658.5 -44.5Q648 -21 632 0H917Q912 -19 912 -37Q912 -64 923 -110L1028 -530Q1039 -573 1050.0 -596.0Q1061 -619 1077 -640H750Z"></path></g><g class="wordmark-glyph" data-letter="Y"><rect class="wordmark-hit" x="1132" y="-640" width="785" height="640" fill="transparent"></rect><path class="wordmark-outline" d="M1262.0 -110Q1252.0 -68 1241.5 -44.5Q1231.0 -21 1215.0 0H1499.0Q1495.0 -19 1495.0 -35Q1495.0 -63 1506.0 -110L1538.0 -237L1808.0 -546Q1826.0 -566 1835.5 -576.0Q1845.0 -586 1855.5 -595.5Q1866.0 -605 1879.0 -614.5Q1892.0 -624 1917.0 -640H1735.0Q1727.0 -614 1718.0 -594.0Q1709.0 -574 1688.0 -551L1534.0 -374L1466.0 -547L1464.0 -554Q1457.0 -572 1453.5 -584.0Q1450.0 -596 1450.0 -607Q1450.0 -610 1451.0 -614Q1452.0 -618 1452.0 -620Q1453.0 -626 1460.0 -638L1461.0 -640H1132.0Q1145.0 -624 1152.0 -611.0Q1159.0 -598 1173.0 -562L1297.0 -250Z"></path><path class="wordmark-fill" d="M1262.0 -110Q1252.0 -68 1241.5 -44.5Q1231.0 -21 1215.0 0H1499.0Q1495.0 -19 1495.0 -35Q1495.0 -63 1506.0 -110L1538.0 -237L1808.0 -546Q1826.0 -566 1835.5 -576.0Q1845.0 -586 1855.5 -595.5Q1866.0 -605 1879.0 -614.5Q1892.0 -624 1917.0 -640H1735.0Q1727.0 -614 1718.0 -594.0Q1709.0 -574 1688.0 -551L1534.0 -374L1466.0 -547L1464.0 -554Q1457.0 -572 1453.5 -584.0Q1450.0 -596 1450.0 -607Q1450.0 -610 1451.0 -614Q1452.0 -618 1452.0 -620Q1453.0 -626 1460.0 -638L1461.0 -640H1132.0Q1145.0 -624 1152.0 -611.0Q1159.0 -598 1173.0 -562L1297.0 -250Z"></path></g><g class="wordmark-glyph" data-letter="S"><rect class="wordmark-hit" x="1972" y="-640" width="725" height="640" fill="transparent"></rect><path class="wordmark-outline" d="M2697.0 -640H2244.0Q2179.0 -640 2134.0 -601.5Q2089.0 -563 2071.0 -488L2035.0 -345Q2026.0 -308 2026.0 -283Q2026.0 -240 2052.0 -223.0Q2078.0 -206 2135.0 -206H2334.0Q2358.0 -206 2366.5 -202.5Q2375.0 -199 2375.0 -190Q2375.0 -186 2373.0 -178L2362.0 -134Q2358.0 -116 2348.0 -111.0Q2338.0 -106 2309.0 -106H2073.0Q2042.0 -106 2023.0 -112.0Q2004.0 -118 1983.0 -130L1972.0 0H2412.0Q2496.0 0 2540.0 -38.5Q2584.0 -77 2604.0 -157L2643.0 -313Q2649.0 -336 2649.0 -355Q2649.0 -401 2615.5 -421.5Q2582.0 -442 2515.0 -442H2342.0Q2318.0 -442 2309.0 -445.0Q2300.0 -448 2300.0 -458Q2300.0 -463 2302.0 -470L2311.0 -506Q2315.0 -523 2326.0 -528.5Q2337.0 -534 2365.0 -534H2592.0Q2625.0 -534 2643.5 -529.0Q2662.0 -524 2686.0 -513Z"></path><path class="wordmark-fill" d="M2697.0 -640H2244.0Q2179.0 -640 2134.0 -601.5Q2089.0 -563 2071.0 -488L2035.0 -345Q2026.0 -308 2026.0 -283Q2026.0 -240 2052.0 -223.0Q2078.0 -206 2135.0 -206H2334.0Q2358.0 -206 2366.5 -202.5Q2375.0 -199 2375.0 -190Q2375.0 -186 2373.0 -178L2362.0 -134Q2358.0 -116 2348.0 -111.0Q2338.0 -106 2309.0 -106H2073.0Q2042.0 -106 2023.0 -112.0Q2004.0 -118 1983.0 -130L1972.0 0H2412.0Q2496.0 0 2540.0 -38.5Q2584.0 -77 2604.0 -157L2643.0 -313Q2649.0 -336 2649.0 -355Q2649.0 -401 2615.5 -421.5Q2582.0 -442 2515.0 -442H2342.0Q2318.0 -442 2309.0 -445.0Q2300.0 -448 2300.0 -458Q2300.0 -463 2302.0 -470L2311.0 -506Q2315.0 -523 2326.0 -528.5Q2337.0 -534 2365.0 -534H2592.0Q2625.0 -534 2643.5 -529.0Q2662.0 -524 2686.0 -513Z"></path></g><g class="wordmark-glyph" data-letter="T"><rect class="wordmark-hit" x="2752" y="-640" width="661" height="640" fill="transparent"></rect><path class="wordmark-outline" d="M2805.0 -640 2752.0 -508Q2778.0 -522 2797.5 -528.0Q2817.0 -534 2849.0 -534H2960.0L2854.0 -110Q2844.0 -68 2833.5 -44.5Q2823.0 -21 2807.0 0H3091.0Q3087.0 -19 3087.0 -35Q3087.0 -63 3098.0 -110L3204.0 -534H3315.0Q3347.0 -534 3364.0 -528.0Q3381.0 -522 3400.0 -508L3413.0 -640Z"></path><path class="wordmark-fill" d="M2805.0 -640 2752.0 -508Q2778.0 -522 2797.5 -528.0Q2817.0 -534 2849.0 -534H2960.0L2854.0 -110Q2844.0 -68 2833.5 -44.5Q2823.0 -21 2807.0 0H3091.0Q3087.0 -19 3087.0 -35Q3087.0 -63 3098.0 -110L3204.0 -534H3315.0Q3347.0 -534 3364.0 -528.0Q3381.0 -522 3400.0 -508L3413.0 -640Z"></path></g><g class="wordmark-glyph" data-letter="E"><rect class="wordmark-hit" x="3468" y="-640" width="714" height="640" fill="transparent"></rect><path class="wordmark-outline" d="M3758.0 -106 3801.0 -278H3975.0Q4011.0 -278 4033.5 -274.0Q4056.0 -270 4080.0 -262L4081.0 -261L4116.0 -401H4114.0Q4085.0 -392 4061.5 -388.0Q4038.0 -384 4002.0 -384H3828.0L3865.0 -534H4064.0Q4101.0 -534 4123.5 -530.0Q4146.0 -526 4169.0 -518L4171.0 -517L4182.0 -640H3628.0Q3632.0 -621 3632.0 -605Q3632.0 -577 3620.0 -530L3515.0 -110Q3505.0 -68 3494.5 -44.5Q3484.0 -21 3468.0 0H4032.0L4085.0 -123Q4057.0 -115 4033.0 -110.5Q4009.0 -106 3970.0 -106Z"></path><path class="wordmark-fill" d="M3758.0 -106 3801.0 -278H3975.0Q4011.0 -278 4033.5 -274.0Q4056.0 -270 4080.0 -262L4081.0 -261L4116.0 -401H4114.0Q4085.0 -392 4061.5 -388.0Q4038.0 -384 4002.0 -384H3828.0L3865.0 -534H4064.0Q4101.0 -534 4123.5 -530.0Q4146.0 -526 4169.0 -518L4171.0 -517L4182.0 -640H3628.0Q3632.0 -621 3632.0 -605Q3632.0 -577 3620.0 -530L3515.0 -110Q3505.0 -68 3494.5 -44.5Q3484.0 -21 3468.0 0H4032.0L4085.0 -123Q4057.0 -115 4033.0 -110.5Q4009.0 -106 3970.0 -106Z"></path></g><g class="wordmark-glyph" data-letter="R"><rect class="wordmark-hit" x="4237" y="-640" width="818" height="640" fill="transparent"></rect><path class="wordmark-outline" d="M4634.0 -534H4772.0Q4791.0 -534 4798.5 -530.5Q4806.0 -527 4806.0 -516Q4806.0 -509 4803.0 -498L4784.0 -420Q4778.0 -398 4768.5 -391.0Q4759.0 -384 4735.0 -384H4597.0ZM4645.0 -278 4692.0 0H4965.0Q4954.0 -18 4943.0 -69Q4939.0 -85 4936.0 -98L4894.0 -278Q4920.0 -280 4936.5 -283.5Q4953.0 -287 4968.5 -296.5Q4984.0 -306 4996.5 -326.5Q5009.0 -347 5018.0 -381L5047.0 -499Q5055.0 -529 5055.0 -551Q5055.0 -600 5021.0 -620.0Q4987.0 -640 4917.0 -640H4391.0Q4400.0 -620 4400.0 -598Q4400.0 -573 4389.0 -530L4284.0 -110Q4274.0 -68 4263.5 -44.5Q4253.0 -21 4237.0 0H4521.0Q4517.0 -19 4517.0 -35Q4517.0 -63 4528.0 -110L4570.0 -278Z"></path><path class="wordmark-fill" d="M4634.0 -534H4772.0Q4791.0 -534 4798.5 -530.5Q4806.0 -527 4806.0 -516Q4806.0 -509 4803.0 -498L4784.0 -420Q4778.0 -398 4768.5 -391.0Q4759.0 -384 4735.0 -384H4597.0ZM4645.0 -278 4692.0 0H4965.0Q4954.0 -18 4943.0 -69Q4939.0 -85 4936.0 -98L4894.0 -278Q4920.0 -280 4936.5 -283.5Q4953.0 -287 4968.5 -296.5Q4984.0 -306 4996.5 -326.5Q5009.0 -347 5018.0 -381L5047.0 -499Q5055.0 -529 5055.0 -551Q5055.0 -600 5021.0 -620.0Q4987.0 -640 4917.0 -640H4391.0Q4400.0 -620 4400.0 -598Q4400.0 -573 4389.0 -530L4284.0 -110Q4274.0 -68 4263.5 -44.5Q4253.0 -21 4237.0 0H4521.0Q4517.0 -19 4517.0 -35Q4517.0 -63 4528.0 -110L4570.0 -278Z"></path></g><g class="wordmark-glyph" data-letter="Y"><rect class="wordmark-hit" x="5110" y="-640" width="785" height="640" fill="transparent"></rect><path class="wordmark-outline" d="M5240.0 -110Q5230.0 -68 5219.5 -44.5Q5209.0 -21 5193.0 0H5477.0Q5473.0 -19 5473.0 -35Q5473.0 -63 5484.0 -110L5516.0 -237L5786.0 -546Q5804.0 -566 5813.5 -576.0Q5823.0 -586 5833.5 -595.5Q5844.0 -605 5857.0 -614.5Q5870.0 -624 5895.0 -640H5713.0Q5705.0 -614 5696.0 -594.0Q5687.0 -574 5666.0 -551L5512.0 -374L5444.0 -547L5442.0 -554Q5435.0 -572 5431.5 -584.0Q5428.0 -596 5428.0 -607Q5428.0 -610 5429.0 -614Q5430.0 -618 5430.0 -620Q5431.0 -626 5438.0 -638L5439.0 -640H5110.0Q5123.0 -624 5130.0 -611.0Q5137.0 -598 5151.0 -562L5275.0 -250Z"></path><path class="wordmark-fill" d="M5240.0 -110Q5230.0 -68 5219.5 -44.5Q5209.0 -21 5193.0 0H5477.0Q5473.0 -19 5473.0 -35Q5473.0 -63 5484.0 -110L5516.0 -237L5786.0 -546Q5804.0 -566 5813.5 -576.0Q5823.0 -586 5833.5 -595.5Q5844.0 -605 5857.0 -614.5Q5870.0 -624 5895.0 -640H5713.0Q5705.0 -614 5696.0 -594.0Q5687.0 -574 5666.0 -551L5512.0 -374L5444.0 -547L5442.0 -554Q5435.0 -572 5431.5 -584.0Q5428.0 -596 5428.0 -607Q5428.0 -610 5429.0 -614Q5430.0 -618 5430.0 -620Q5431.0 -626 5438.0 -638L5439.0 -640H5110.0Q5123.0 -624 5130.0 -611.0Q5137.0 -598 5151.0 -562L5275.0 -250Z"></path></g><g class="wordmark-glyph" data-letter="T"><rect class="wordmark-hit" x="6210" y="-640" width="661" height="640" fill="transparent"></rect><path class="wordmark-outline" d="M6263.0 -640 6210.0 -508Q6236.0 -522 6255.5 -528.0Q6275.0 -534 6307.0 -534H6418.0L6312.0 -110Q6302.0 -68 6291.5 -44.5Q6281.0 -21 6265.0 0H6549.0Q6545.0 -19 6545.0 -35Q6545.0 -63 6556.0 -110L6662.0 -534H6773.0Q6805.0 -534 6822.0 -528.0Q6839.0 -522 6858.0 -508L6871.0 -640Z"></path><path class="wordmark-fill" d="M6263.0 -640 6210.0 -508Q6236.0 -522 6255.5 -528.0Q6275.0 -534 6307.0 -534H6418.0L6312.0 -110Q6302.0 -68 6291.5 -44.5Q6281.0 -21 6265.0 0H6549.0Q6545.0 -19 6545.0 -35Q6545.0 -63 6556.0 -110L6662.0 -534H6773.0Q6805.0 -534 6822.0 -528.0Q6839.0 -522 6858.0 -508L6871.0 -640Z"></path></g><g class="wordmark-glyph" data-letter="O"><rect class="wordmark-hit" x="6926" y="-640" width="778" height="640" fill="transparent"></rect><path class="wordmark-outline" d="M6937.0 -188Q6926.0 -143 6926.0 -109Q6926.0 -52 6957.5 -26.0Q6989.0 0 7052.0 0H7418.0Q7499.0 0 7550.5 -44.0Q7602.0 -88 7627.0 -188L7693.0 -452Q7704.0 -498 7704.0 -531Q7704.0 -589 7672.0 -614.5Q7640.0 -640 7578.0 -640H7212.0Q7130.0 -640 7079.0 -596.0Q7028.0 -552 7003.0 -452ZM7257.0 -493Q7262.0 -515 7276.0 -524.5Q7290.0 -534 7315.0 -534H7421.0Q7461.0 -534 7461.0 -508Q7461.0 -502 7459.0 -493L7373.0 -147Q7367.0 -125 7353.0 -115.5Q7339.0 -106 7314.0 -106H7208.0Q7169.0 -106 7169.0 -132Q7169.0 -138 7171.0 -147Z"></path><path class="wordmark-fill" d="M6937.0 -188Q6926.0 -143 6926.0 -109Q6926.0 -52 6957.5 -26.0Q6989.0 0 7052.0 0H7418.0Q7499.0 0 7550.5 -44.0Q7602.0 -88 7627.0 -188L7693.0 -452Q7704.0 -498 7704.0 -531Q7704.0 -589 7672.0 -614.5Q7640.0 -640 7578.0 -640H7212.0Q7130.0 -640 7079.0 -596.0Q7028.0 -552 7003.0 -452ZM7257.0 -493Q7262.0 -515 7276.0 -524.5Q7290.0 -534 7315.0 -534H7421.0Q7461.0 -534 7461.0 -508Q7461.0 -502 7459.0 -493L7373.0 -147Q7367.0 -125 7353.0 -115.5Q7339.0 -106 7314.0 -106H7208.0Q7169.0 -106 7169.0 -132Q7169.0 -138 7171.0 -147Z"></path></g><g class="wordmark-glyph" data-letter="W"><rect class="wordmark-hit" x="7759" y="-640" width="1044" height="640" fill="transparent"></rect><path class="wordmark-outline" d="M8230.0 0H8466.0L8732.0 -543Q8752.0 -582 8768.0 -602.5Q8784.0 -623 8800.0 -637Q8802.0 -639 8803.0 -640H8648.0Q8650.0 -634 8650.0 -625Q8650.0 -613 8646.0 -598Q8638.0 -566 8622.0 -535L8472.0 -226H8470.0L8469.0 -640H8225.0L8022.0 -227H8020.0L8022.0 -535Q8023.0 -553 8024.5 -568.0Q8026.0 -583 8030.0 -598Q8034.0 -613 8037.5 -621.0Q8041.0 -629 8049.0 -640H7759.0Q7768.0 -621 7773.0 -603.0Q7778.0 -585 7779.0 -557L7783.0 0H8016.0L8225.0 -424H8227.0Z"></path><path class="wordmark-fill" d="M8230.0 0H8466.0L8732.0 -543Q8752.0 -582 8768.0 -602.5Q8784.0 -623 8800.0 -637Q8802.0 -639 8803.0 -640H8648.0Q8650.0 -634 8650.0 -625Q8650.0 -613 8646.0 -598Q8638.0 -566 8622.0 -535L8472.0 -226H8470.0L8469.0 -640H8225.0L8022.0 -227H8020.0L8022.0 -535Q8023.0 -553 8024.5 -568.0Q8026.0 -583 8030.0 -598Q8034.0 -613 8037.5 -621.0Q8041.0 -629 8049.0 -640H7759.0Q7768.0 -621 7773.0 -603.0Q7778.0 -585 7779.0 -557L7783.0 0H8016.0L8225.0 -424H8227.0Z"></path></g><g class="wordmark-glyph" data-letter="N"><rect class="wordmark-hit" x="8858" y="-640" width="896" height="640" fill="transparent"></rect><path class="wordmark-outline" d="M9254.0 0H9570.0L9701.0 -525Q9708.0 -552 9713.0 -569.5Q9718.0 -587 9723.5 -598.5Q9729.0 -610 9736.0 -619.5Q9743.0 -629 9754.0 -640H9600.0Q9609.0 -619 9609.0 -602Q9609.0 -591 9605.5 -573.0Q9602.0 -555 9595.0 -525L9493.0 -118H9490.0L9361.0 -640H9018.0Q9027.0 -619 9027.0 -602Q9027.0 -591 9023.5 -573.0Q9020.0 -555 9013.0 -525L8911.0 -115Q8904.0 -88 8899.0 -71.0Q8894.0 -54 8888.5 -42.0Q8883.0 -30 8876.0 -20.5Q8869.0 -11 8858.0 0H9012.0Q9003.0 -21 9003.0 -38Q9003.0 -58 9017.0 -115L9120.0 -530H9122.0Z"></path><path class="wordmark-fill" d="M9254.0 0H9570.0L9701.0 -525Q9708.0 -552 9713.0 -569.5Q9718.0 -587 9723.5 -598.5Q9729.0 -610 9736.0 -619.5Q9743.0 -629 9754.0 -640H9600.0Q9609.0 -619 9609.0 -602Q9609.0 -591 9605.5 -573.0Q9602.0 -555 9595.0 -525L9493.0 -118H9490.0L9361.0 -640H9018.0Q9027.0 -619 9027.0 -602Q9027.0 -591 9023.5 -573.0Q9020.0 -555 9013.0 -525L8911.0 -115Q8904.0 -88 8899.0 -71.0Q8894.0 -54 8888.5 -42.0Q8883.0 -30 8876.0 -20.5Q8869.0 -11 8858.0 0H9012.0Q9003.0 -21 9003.0 -38Q9003.0 -58 9017.0 -115L9120.0 -530H9122.0Z"></path></g></svg></div>
+    <div class="footer-company" dir="ltr" role="group" aria-label="Company information">
+      <div class="footer-company-item footer-global"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><ellipse cx="12" cy="12" rx="4" ry="9"></ellipse><path d="M3 12h18"></path></svg><div><span class="footer-company-label">Serving a Global Community</span><span class="footer-company-value">Worldwide</span></div></div>
+      <div class="footer-company-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h8l4 4v14H6zM14 3v5h4M9 12h6M9 16h6"></path></svg><div><span class="footer-company-label">CR No.</span><span class="footer-company-value">7023685857</span></div></div>
+      <div class="footer-company-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h8l4 4v14H6zM14 3v5h4M9 12h6M9 16h6"></path></svg><div><span class="footer-company-label">SA VAT ID</span><span class="footer-company-value">314311978600003</span></div></div>
+      <a class="footer-company-item footer-support" href="mailto:support@mtrp.gg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m4 7 8 6 8-6"></path></svg><div><span class="footer-company-label">Contact</span><span class="footer-company-value">support@mtrp.gg</span></div></a>
     </div>
-  </div>
+    <div class="footer-bottom"><span>© <span id="year">2026</span> Rules Town STUDIO</span><img class="footer-made-saudi" data-src="assets/images/made-in-saudi-orange.png" alt="صنع في السعودية" width="102" height="53"><a href="." class="footer-back-top" aria-label="العودة إلى أعلى الصفحة"><span aria-hidden="true">↑</span></a></div>
+  </footer>
+  <audio id="brand-audio" src="https://mtgg.netlify.app/assets/mtrp-voice.mp3" preload="auto"></audio>
+  <dialog class="story-dialog" aria-labelledby="story-detail-title" aria-describedby="story-detail-description"><div class="story-flight"><div class="story-turner"><article class="story-panel" dir="rtl"><button class="story-close" type="button" aria-label="إغلاق البطاقة">×</button><div class="story-detail-top"><span class="story-detail-edition" dir="ltr">MT / ROLE EDITION</span><span class="story-detail-eyebrow" dir="ltr"></span></div><div class="story-detail-art" aria-hidden="true"></div><div class="story-detail-copy"><h2 id="story-detail-title" dir="ltr"></h2><p id="story-detail-description"></p><h3>كيف تبدأ حكايتك؟</h3><ul class="story-paths"></ul><span class="story-detail-footer" dir="ltr"><span>Rules Town</span><img src="assets/images/mt-logo.png" alt="" width="36" height="36"></span></div></article><div class="story-back" aria-hidden="true"><span class="story-back-top">Rules Town<br><small>THE CITY REMEMBERS</small></span><div class="story-back-crest"><img src="assets/images/mt-logo.png" alt="" width="220" height="220"></div><span class="story-back-bottom">ONE CITY. ENDLESS STORIES.<br><small>CHOOSE YOUR STORY</small></span></div></div></div></dialog>
+  <div class="audio-notice" role="status" hidden=""></div>
 
-  <!-- 2. أنيميشن مقدمة Wolf -->
-  <div class="wolf-intro" id="introScreen">
-    <div class="wolf-logo-container">
-      <img class="wolf-logo" src="https://cdn.discordapp.com/attachments/1321582290043666504/1536526713532719164/Untitl55ed.png?ex=6a7bb983&is=6a7a6803&hm=cc76fafbeefea3d3c437f8f65fcb18bcd7aa03c53377b260cf9a156083570d6e&" alt="Wolf Logo">
-      <div class="wolf-text">WOLF</div>
-    </div>
-  </div>
 
-  <!-- 3. شاشة الترحيب بالنص -->
-  <div class="welcome-screen" id="welcomeScreen">
-    <img id="welcomeAvatar" src="" alt="Avatar">
-    <h1><span data-i18n="welcomeGreeting">مرحباً بك،</span> <span id="welcomeUser"></span> 👋</h1>
-  </div>
 
-  <!-- 4. البنر المتحرك العلوي (بدل اسم الموقع القديم) -->
-  <div class="hero-banner" id="heroBanner">
-    <div class="banner-slide active" style="background-image: url('Uhttps://cdn.discordapp.com/attachments/1321582290043666504/1536526713532719164/Untitl55ed.png?ex=6a7bb983&is=6a7a6803&hm=cc76fafbeefea3d3c437f8f65fcb18bcd7aa03c53377b260cf9a156083570d6e&');">
-      <div class="banner-overlay"></div>
-      <div class="banner-content">
-        <h2>WOLF <span>CINEMA</span></h2>
-        <p data-i18n="bannerText1">استمتع بأحدث المقاطع والعروض الحصرية بجودة عالية.</p>
-      </div>
-    </div>
-    <div class="banner-slide" style="background-image: url('https://cdn.discordapp.com/attachments/1321582290043666504/1536526713532719164/Untitl55ed.png?ex=6a7bb983&is=6a7a6803&hm=cc76fafbeefea3d3c437f8f65fcb18bcd7aa03c53377b260cf9a156083570d6e&');">
-      <div class="banner-overlay"></div>
-      <div class="banner-content">
-        <h2>EXCLUSIVE <span>EDITS</span></h2>
-        <p data-i18n="bannerText2">مكتبة متجددة من المقاطع والمحتوى المميز.</p>
-      </div>
-    </div>
-  </div>
 
-  <!-- حاوية التحكم أعلى اليسار: صورة الحساب وتحتها اسمه، بجانب زر الإعدادات -->
-  <div class="top-left-controls" id="topLeftControls">
-    <div class="user-profile-display" onclick="openSettings()" title="الملف الشخصي">
-      <img id="navAvatarImg" class="user-avatar-img" src="https://cdn.discordapp.com/attachments/1321582290043666504/1536526713532719164/Untitl55ed.png?ex=6a7bb983&is=6a7a6803&hm=cc76fafbeefea3d3c437f8f65fcb18bcd7aa03c53377b260cf9a156083570d6e&" alt="صورة الحساب">
-      <span id="navUsernameTag" class="user-name-tag"></span>
-    </div>
-    <div class="settings-btn" onclick="openSettings()" title="الإعدادات">⚙️</div>
-  </div>
-
-  <!-- عنوان القسم -->
-  <div class="section-title" id="sectionTitle" data-i18n="sectionVideos">المقاطع والعروض</div>
-
-  <!-- شبكة الفيديوهات (بنمط نتفليكس مصغر وأفقي) -->
-  <div class="movies-grid" id="moviesGrid">
-    
-    <!-- المقطع الأول -->
-    <div class="movie-card" data-videourl="https://preview.upstream.so/upstream-2020/upstream/files/a277e704-3659-4738-9764-c915b6d83df6/spider-manbrndnewday20261080phdts-03689e19-aea5-403e-8345-cadda167c404.mp4?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=asBgub3s3658NbVE1IN4%2F20260810%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20260810T234607Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Signature=0644fdff00f0ba4696deda0c74e3b130202ee90390595f629f48daffd0a85da5" onclick="openVideo(this)">
-      <img src="https://preview.redd.it/spider-man-brand-new-day-official-teaser-poster-31-july-2026-v0-vfej2ntqsz5h1.jpeg?auto=webp&s=aff0105a89a8036f3204f0f9894119a1efddba2c" alt="غلاف المقطع الأول">
-      <div class="play-btn"></div>
-    </div>
-
-    <!-- المقطع الثاني -->
-    <div class="movie-card" data-videourl="https://preview.upstream.so/upstream-2020/upstream/files/a277e704-3659-4738-9764-c915b6d83df6/spider-man32007remastered720pbluray-8e42fbea-3946-4973-a2fc-f6bae1051d50.mp4?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=asBgub3s3658NbVE1IN4%2F20260810%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20260810T234607Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Signature=f260270170e775bb48337409c4dd896cd53d23ffb0e98ef804244855a23f45b2" onclick="openVideo(this)">
-      <img src="https://i.ebayimg.com/images/g/NL8AAMXQWuRQ9zH3/s-l960.webp" alt="غلاف المقطع الثاني">
-      <div class="play-btn"></div>
-    </div>
-
-    <!-- المقطع الثالث -->
-    <div class="movie-card" data-videourl="https://preview.upstream.so/upstream-2020/upstream/files/a277e704-3659-4738-9764-c915b6d83df6/captainamericacivilwar20161080pbluray-1-023c9b4c-7938-426f-8767-469d491fe906.mp4?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=asBgub3s3658NbVE1IN4%2F20260810%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20260810T234607Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Signature=b01e810583e2fcf64ec88e6490aaac2cf26ff10a2a95481d689348134e601bcf" onclick="openVideo(this)">
-      <img src="https://media0106.elcinema.com/uploads/_315x420_2e4fad7f50aa6e7cd3a0864d17cbb5cf06b03273ccba350f7b8c71fa61059dad.jpg" alt="غلاف المقطع الثالث">
-      <div class="play-btn"></div>
-    </div>
-
-  </div>
-
-  <!-- نافذة الإعدادات -->
-  <div class="modal-overlay" id="settingsModal" style="display: none;">
-    <div class="auth-box">
-      <span class="close-btn" onclick="closeSettings()">✕</span>
-      <h2 style="margin-bottom: 15px;" data-i18n="settingsTitle">إعدادات الحساب</h2>
-      
-      <div class="input-group">
-        <label data-i18n="changeUserLabel">تغيير اسم الحساب (ثنائي وفوق)</label>
-        <input type="text" id="newUsernameInput" onpaste="return false;" oncopy="return false;" oncut="return false;">
-      </div>
-
-      <div class="input-group">
-        <label data-i18n="langLabel">اختر اللغة / Select Language</label>
-        <select id="langSelect">
-          <option value="ar">العربية (Arabic)</option>
-          <option value="en">English (إنجليزي)</option>
-          <option value="es">Español (إسباني)</option>
-          <option value="fr">Français (فرنسي)</option>
-          <option value="de">Deutsch (ألماني)</option>
-          <option value="tr">Türkçe (تركي)</option>
-        </select>
-      </div>
-
-      <div class="input-group">
-        <label data-i18n="changeAvatarLabel">اختيار صورة</label>
-        <input type="file" id="fileInput" accept="image/*" style="display: none;">
-        <button class="btn switch-btn" onclick="document.getElementById('fileInput').click()" data-i18n="chooseImageBtn">اختر صورة</button>
-      </div>
-
-      <button class="btn" onclick="saveSettings()" data-i18n="saveBtn">حفظ التغيرات</button>
-      <button class="btn logout-btn" onclick="logout()" data-i18n="logoutBtn">تسجيل الخروج</button>
-      <div class="msg" id="settingsMsg" style="color: #4CAF50;"></div>
-    </div>
-  </div>
-
-  <script>
-    const defaultAvatar = 'https://cdn.discordapp.com/attachments/1321582290043666504/1536526713532719164/Untitl55ed.png?ex=6a7bb983&is=6a7a6803&hm=cc76fafbeefea3d3c437f8f65fcb18bcd7aa03c53377b260cf9a156083570d6e&';
-
-    // القواميس الخاصة باللغات
-    const translations = {
-      ar: {
-        welcomeTitle: "مرحباً بك في WOLF CINEMA",
-        loginBtn: "تسجيل الدخول",
-        registerBtn: "إنشاء حساب",
-        loginTitle: "تسجيل الدخول",
-        usernameLabel: "اسم المستخدم",
-        passwordLabel: "كلمة المرور",
-        showPass: "إظهار",
-        enterBtn: "دخول",
-        registerTitle: "إنشاء حساب جديد",
-        regUserLabel: "اسم المستخدم (ثنائي وفوق)",
-        createAccBtn: "إنشاء الحساب",
-        welcomeGreeting: "مرحباً بك،",
-        bannerText1: "استمتع بأحدث المقاطع والعروض الحصرية بجودة عالية.",
-        bannerText2: "مكتبة متجددة من المقاطع والمحتوى المميز.",
-        sectionVideos: "المقاطع والعروض",
-        settingsTitle: "إعدادات الحساب",
-        changeUserLabel: "تغيير اسم الحساب (ثنائي وفوق)",
-        langLabel: "اختر اللغة",
-        changeAvatarLabel: "اختيار صورة",
-        chooseImageBtn: "اختر صورة",
-        saveBtn: "حفظ التغيرات",
-        logoutBtn: "تسجيل الخروج",
-        errShort: "يجب أن يكون اسم المستخدم ثنائياً (حرفين) أو أكثر.",
-        errTaken: "اسم المستخدم هذا مستخدم مسبقاً، اختر غيره.",
-        errLogin: "الحساب غير مسجل أو البيانات خاطئة.",
-        successImg: "تمت إضافة الصورة بنجاح!",
-        successSave: "تم حفظ التغيرات!"
-      },
-      en: {
-        welcomeTitle: "Welcome to WOLF CINEMA",
-        loginBtn: "Login",
-        registerBtn: "Register",
-        loginTitle: "Login",
-        usernameLabel: "Username",
-        passwordLabel: "Password",
-        showPass: "Show",
-        enterBtn: "Enter",
-        registerTitle: "Create New Account",
-        regUserLabel: "Username (2+ chars)",
-        createAccBtn: "Create Account",
-        welcomeGreeting: "Welcome,",
-        bannerText1: "Enjoy the latest clips and exclusive shows in high quality.",
-        bannerText2: "A renewed library of clips and featured content.",
-        sectionVideos: "Clips & Shows",
-        settingsTitle: "Account Settings",
-        changeUserLabel: "Change Username (2+ chars)",
-        langLabel: "Select Language",
-        changeAvatarLabel: "Select Image",
-        chooseImageBtn: "Choose Image",
-        saveBtn: "Save Changes",
-        logoutBtn: "Logout",
-        errShort: "Username must be at least 2 characters.",
-        errTaken: "Username is already taken.",
-        errLogin: "Account not registered or invalid data.",
-        successImg: "Image added successfully!",
-        successSave: "Changes saved!"
-      },
-      es: {
-        welcomeTitle: "Bienvenido a WOLF CINEMA",
-        loginBtn: "Iniciar sesión",
-        registerBtn: "Registrarse",
-        loginTitle: "Iniciar sesión",
-        usernameLabel: "Nombre de usuario",
-        passwordLabel: "Contraseña",
-        showPass: "Mostrar",
-        enterBtn: "Entrar",
-        registerTitle: "Crear una cuenta",
-        regUserLabel: "Usuario (2+ car)",
-        createAccBtn: "Crear cuenta",
-        welcomeGreeting: "Bienvenido,",
-        bannerText1: "Disfruta de los últimos clips y contenido exclusivo.",
-        bannerText2: "Una biblioteca renovada de clips y contenido destacado.",
-        sectionVideos: "Clips y Shows",
-        settingsTitle: "Configuración",
-        changeUserLabel: "Cambiar usuario (2+ car)",
-        langLabel: "Seleccionar idioma",
-        changeAvatarLabel: "Seleccionar imagen",
-        chooseImageBtn: "Elegir imagen",
-        saveBtn: "Guardar cambios",
-        logoutBtn: "Cerrar sesión",
-        errShort: "El usuario debe tener al menos 2 caracteres.",
-        errTaken: "El nombre de usuario ya está en uso.",
-        errLogin: "Cuenta no registrada o datos incorrectos.",
-        successImg: "¡Imagen agregada con éxito!",
-        successSave: "¡Cambios guardados!"
-      },
-      fr: {
-        welcomeTitle: "Bienvenue sur WOLF CINEMA",
-        loginBtn: "Connexion",
-        registerBtn: "S'inscrire",
-        loginTitle: "Connexion",
-        usernameLabel: "Nom d'utilisateur",
-        passwordLabel: "Mot de passe",
-        showPass: "Afficher",
-        enterBtn: "Entrer",
-        registerTitle: "Créer un compte",
-        regUserLabel: "Utilisateur (2+ car)",
-        createAccBtn: "Créer un compte",
-        welcomeGreeting: "Bienvenue,",
-        bannerText1: "Profitez des derniers clips et contenus exclusifs.",
-        bannerText2: "Une bibliothèque renouvelée de clips et de contenus.",
-        sectionVideos: "Clips et Séries",
-        settingsTitle: "Paramètres",
-        changeUserLabel: "Changer d'utilisateur",
-        langLabel: "Choisir la langue",
-        changeAvatarLabel: "Sélectionner une image",
-        chooseImageBtn: "Choisir une image",
-        saveBtn: "Enregistrer",
-        logoutBtn: "Déconnexion",
-        errShort: "Le nom d'utilisateur doit contenir au moins 2 caractères.",
-        errTaken: "Ce nom d'utilisateur est déjà pris.",
-        errLogin: "Compte non enregistré ou données invalides.",
-        successImg: "Image ajoutée avec succès !",
-        successSave: "Modifications enregistrées !"
-      },
-      de: {
-        welcomeTitle: "Willkommen bei WOLF CINEMA",
-        loginBtn: "Anmelden",
-        registerBtn: "Registrieren",
-        loginTitle: "Anmelden",
-        usernameLabel: "Benutzername",
-        passwordLabel: "Passwort",
-        showPass: "Anzeigen",
-        enterBtn: "Einloggen",
-        registerTitle: "Konto erstellen",
-        regUserLabel: "Benutzername (2+ Zeichen)",
-        createAccBtn: "Konto erstellen",
-        welcomeGreeting: "Willkommen,",
-        bannerText1: "Genießen Sie die neuesten Clips und exklusiven Inhalte.",
-        bannerText2: "Eine erneuerte Bibliothek mit Clips und Inhalten.",
-        sectionVideos: "Clips & Shows",
-        settingsTitle: "Kontoeinstellungen",
-        changeUserLabel: "Benutzername ändern",
-        langLabel: "Sprache auswählen",
-        changeAvatarLabel: "Bild auswählen",
-        chooseImageBtn: "Bild wählen",
-        saveBtn: "Änderungen speichern",
-        logoutBtn: "Abmelden",
-        errShort: "Der Benutzername muss mindestens 2 Zeichen lang sein.",
-        errTaken: "Benutzername ist bereits vergeben.",
-        errLogin: "Konto nicht registriert oder ungültige Daten.",
-        successImg: "Bild erfolgreich hinzugefügt!",
-        successSave: "Änderungen gespeichert!"
-      },
-      tr: {
-        welcomeTitle: "WOLF CINEMA'ya Hoş Geldiniz",
-        loginBtn: "Giriş Yap",
-        registerBtn: "Kayıt Ol",
-        loginTitle: "Giriş Yap",
-        usernameLabel: "Kullanıcı Adı",
-        passwordLabel: "Şifre",
-        showPass: "Göster",
-        enterBtn: "Giriş",
-        registerTitle: "Yeni Hesap Oluştur",
-        regUserLabel: "Kullanıcı Adı (2+ karakter)",
-        createAccBtn: "Hesap Oluştur",
-        welcomeGreeting: "Hoş geldin,",
-        bannerText1: "En son kliplerin ve özel içeriklerin tadını çıkarın.",
-        bannerText2: "Yenilenmiş klip ve içerik kütüphanesi.",
-        sectionVideos: "Klipler ve Gösteriler",
-        settingsTitle: "Hesap Ayarları",
-        changeUserLabel: "Kullanıcı Adını Değiştir",
-        langLabel: "Dil Seçin",
-        changeAvatarLabel: "Görsel Seç",
-        chooseImageBtn: "Görsel Seç",
-        saveBtn: "Değişiklikleri Kaydet",
-        logoutBtn: "Çıkış Yap",
-        errShort: "Kullanıcı adı en az 2 karakter olmalıdır.",
-        errTaken: "Bu kullanıcı adı zaten alınmış.",
-        errLogin: "Hesap kayıtlı değil veya bilgiler hatalı.",
-        successImg: "Görsel başarıyla eklendi!",
-        successSave: "Değişiklikler kaydedildi!"
-      }
-    };
-
-    let currentLang = localStorage.getItem('appLang') || 'ar';
-
-    function applyLanguage(lang) {
-      if (lang === 'ar') {
-        document.documentElement.setAttribute('dir', 'rtl');
-        document.documentElement.setAttribute('lang', 'ar');
-      } else {
-        document.documentElement.setAttribute('dir', 'ltr');
-        document.documentElement.setAttribute('lang', lang);
-      }
-
-      const elements = document.querySelectorAll('[data-i18n]');
-      elements.forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (translations[lang] && translations[lang][key]) {
-          el.innerText = translations[lang][key];
-        }
-      });
-    }
-
-    const authModal = document.getElementById('authModal');
-    const stepChoice = document.getElementById('stepChoice');
-    const stepLogin = document.getElementById('stepLogin');
-    const stepRegister = document.getElementById('stepRegister');
-    const introScreen = document.getElementById('introScreen');
-    const welcomeScreen = document.getElementById('welcomeScreen');
-    const topLeftControls = document.getElementById('topLeftControls');
-    const settingsModal = document.getElementById('settingsModal');
-    const moviesGrid = document.getElementById('moviesGrid');
-    const heroBanner = document.getElementById('heroBanner');
-    const sectionTitle = document.getElementById('sectionTitle');
-    const fileInput = document.getElementById('fileInput');
-    const langSelect = document.getElementById('langSelect');
-    const navAvatarImg = document.getElementById('navAvatarImg');
-    const navUsernameTag = document.getElementById('navUsernameTag');
-
-    let uploadedImageBase64 = null;
-    let bannerInterval = null;
-
-    window.onload = function() {
-      langSelect.value = currentLang;
-      applyLanguage(currentLang);
-
-      const activeUser = localStorage.getItem('activeSession');
-      if (activeUser) {
-        authModal.style.display = 'none';
-        updateUserHeader(activeUser);
-        startFullExperience(activeUser);
-      } else {
-        authModal.style.display = 'flex';
-        showStep(stepChoice);
-      }
-    };
-
-    function startBannerSlider() {
-      const slides = document.querySelectorAll('.banner-slide');
-      let currentSlide = 0;
-      if (bannerInterval) clearInterval(bannerInterval);
-      bannerInterval = setInterval(() => {
-        slides[currentSlide].classList.remove('active');
-        currentSlide = (currentSlide + 1) % slides.length;
-        slides[currentSlide].classList.add('active');
-      }, 4000);
-    }
-
-    function updateUserHeader(username) {
-      const users = getUsers();
-      const userObj = users[username];
-      navUsernameTag.innerText = username;
-      navAvatarImg.src = (userObj && userObj.avatar) ? userObj.avatar : defaultAvatar;
-    }
-
-    function startFullExperience(username) {
-      introScreen.classList.add('active');
-      setTimeout(() => {
-        introScreen.classList.remove('active');
-        showWelcomeScreen(username);
-      }, 3500);
-    }
-
-    function showWelcomeScreen(username) {
-      const users = getUsers();
-      document.getElementById('welcomeUser').innerText = username;
-      document.getElementById('welcomeAvatar').src = (users[username] && users[username].avatar) ? users[username].avatar : defaultAvatar;
-
-      welcomeScreen.classList.add('active');
-      setTimeout(() => {
-        welcomeScreen.classList.remove('active');
-        heroBanner.style.display = 'block';
-        sectionTitle.style.display = 'block';
-        topLeftControls.style.display = 'flex';
-        moviesGrid.style.opacity = '1';
-        startBannerSlider();
-      }, 1500);
-    }
-
-    function showStep(step) {
-      stepChoice.style.display = 'none';
-      stepLogin.style.display = 'none';
-      stepRegister.style.display = 'none';
-      step.style.display = 'block';
-      clearMessages();
-    }
-
-    function showForm(type) {
-      if (type === 'login') showStep(stepLogin);
-      if (type === 'register') showStep(stepRegister);
-    }
-
-    function clearMessages() {
-      document.getElementById('loginMsg').innerText = '';
-      document.getElementById('regMsg').innerText = '';
-      document.getElementById('settingsMsg').innerText = '';
-    }
-
-    function getUsers() {
-      return JSON.parse(localStorage.getItem('registeredUsers') || '{}');
-    }
-
-    function togglePassword(fieldId, btn) {
-      const field = document.getElementById(fieldId);
-      const isAr = currentLang === 'ar';
-      if (field.type === 'password') {
-        field.type = 'text';
-        btn.innerText = isAr ? 'إخفاء' : 'Hide';
-      } else {
-        field.type = 'password';
-        btn.innerText = isAr ? 'إظهار' : 'Show';
-      }
-    }
-
-    function handleLogin() {
-      const user = document.getElementById('loginUser').value.trim();
-      const pass = document.getElementById('loginPass').value;
-      const users = getUsers();
-
-      if (!users[user] || users[user].pass !== pass) {
-        document.getElementById('loginMsg').innerText = translations[currentLang].errLogin;
-      } else {
-        localStorage.setItem('activeSession', user);
-        authModal.style.display = 'none';
-        updateUserHeader(user);
-        startFullExperience(user);
-      }
-    }
-
-    function handleRegister() {
-      const user = document.getElementById('regUser').value.trim();
-      const pass = document.getElementById('regPass').value;
-
-      if (!user || !pass) {
-        document.getElementById('regMsg').innerText = currentLang === 'ar' ? "يرجى إدخال الاسم وكلمة المرور." : "Please enter username and password.";
-        return;
-      }
-
-      if (user.length < 2) {
-        document.getElementById('regMsg').innerText = translations[currentLang].errShort;
-        return;
-      }
-
-        const users = getUsers();
-      if (users[user]) {
-        document.getElementById('regMsg').innerText = translations[currentLang].errTaken;
-        return;
-      }
-
-      users[user] = { pass: pass, avatar: defaultAvatar };
-      localStorage.setItem('registeredUsers', JSON.stringify(users));
-      localStorage.setItem('activeSession', user);
-
-      authModal.style.display = 'none';
-      updateUserHeader(user);
-      startFullExperience(user);
-    }
-
-    function openSettings() {
-      const currentUser = localStorage.getItem('activeSession');
-      document.getElementById('newUsernameInput').value = currentUser;
-      langSelect.value = currentLang;
-      settingsModal.style.display = 'flex';
-      uploadedImageBase64 = null;
-    }
-
-    function closeSettings() {
-      settingsModal.style.display = 'none';
-      clearMessages();
-    }
-
-    fileInput.onchange = function(e) {
-      const file = e.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function(event) {
-          uploadedImageBase64 = event.target.result;
-          document.getElementById('settingsMsg').innerText = translations[currentLang].successImg;
-        };
-        reader.readAsDataURL(file);
-      }
-    };
-
-    function saveSettings() {
-      const currentUser = localStorage.getItem('activeSession');
-      const newUsername = document.getElementById('newUsernameInput').value.trim();
-      const selectedLang = langSelect.value;
-      const users = getUsers();
-
-      if (!newUsername) return;
-
-      if (newUsername.length < 2) {
-        document.getElementById('settingsMsg').style.color = '#ff5555';
-        document.getElementById('settingsMsg').innerText = translations[currentLang].errShort;
-        return;
-      }
-
-      if (newUsername !== currentUser && users[newUsername]) {
-        document.getElementById('settingsMsg').style.color = '#ff5555';
-        document.getElementById('settingsMsg').innerText = translations[currentLang].errTaken;
-        return;
-      }
-
-      let userObj = users[currentUser];
-
-      if (uploadedImageBase64) {
-        userObj.avatar = uploadedImageBarbase64 || uploadedImageBase64;
-      }
-
-      if (newUsername !== currentUser) {
-        delete users[currentUser];
-        users[newUsername] = userObj;
-        localStorage.setItem('activeSession', newUsername);
-      } else {
-        users[currentUser] = userObj;
-      }
-
-      localStorage.setItem('registeredUsers', JSON.stringify(users));
-      
-      currentLang = selectedLang;
-      localStorage.setItem('appLang', selectedLang);
-      applyLanguage(selectedLang);
-
-      document.getElementById('settingsMsg').style.color = '#4CAF50';
-      document.getElementById('settingsMsg').innerText = translations[currentLang].successSave;
-      setTimeout(() => {
-        closeSettings();
-        location.reload();
-      }, 800);
-    }
-
-    function logout() {
-      localStorage.removeItem('activeSession');
-      closeSettings();
-      if (bannerInterval) clearInterval(bannerInterval);
-      moviesGrid.style.opacity = '0';
-      heroBanner.style.display = 'none';
-      sectionTitle.style.display = 'none';
-      topLeftControls.style.display = 'none';
-      authModal.style.display = 'flex';
-      showStep(stepChoice);
-    }
-
-    function openVideo(card) {
-      const videoUrl = card.getAttribute('data-videourl');
-      if (videoUrl && videoUrl.includes('.mp4')) {
-        window.open(videoUrl, '_blank');
-      } else {
-        alert(currentLang === 'ar' ? 'الرجاء وضع رابط فيديو حقيقي في خاصية data-videourl' : 'Please insert a real video link in data-videourl');
-      }
-    }
-  </script>
+<script async="" src=".netlify/scripts/hud.variant_public.js" data-nf-variant="public" data-netlify-site-id="e6b46f0c-fe83-4df1-8f35-bf4af677a0e9" data-app-host="app.netlify.com"></script>
 </body>
-</html>
